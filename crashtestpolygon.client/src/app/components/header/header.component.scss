@@ -1,4 +1,5 @@
 @import "../../../styles/colors.scss";
+@import "../../../styles/fonts.scss";
 
 .background {
     background-color: #292F36;
@@ -8,19 +9,78 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     height: 100px;
+}
+
+.logo {
+    @extend .font__logo-m;
 }
 
 .tag {
     color: $color-brand1;
 }
 
-.nav-menu__item {
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-menu__block {
+    @extend .font__menu-m;
+}
+
+.nav-menu__block__item {
     padding: 10px;
+}
+
+.nav-menu__block__item:hover,
+.nav-menu__block__links__item:hover,
+.link-name:hover,
+.logo:hover {
+    color: $color-brand1;
     cursor: pointer;
 }
 
-.nav-menu__item:hover {
-    color: $color-brand1;
+.nav-menu__block__links__item {
+    @extend .font__media-m;
+    padding-left: 20px;
+}
+
+@media screen and (max-width: 991.5px) {
+    .link-name {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767.5px) {
+    .logo {
+        font-weight: $regular;
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .nav-menu__block {
+        font-weight: $regular;
+        font-size: 16px;
+        line-height: 20px;
+    }
+}
+
+@media screen and (max-width: 519px) {
+    .logo {
+        font-weight: $regular;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .nav-menu__block {
+        font-weight: $regular;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .nav-menu__block__links {
+        display: none;
+    }
 }

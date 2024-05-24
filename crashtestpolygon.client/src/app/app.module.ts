@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HeroSectionComponent } from './components/landing/hero-section/hero-section.component';
 import { LandingModule } from './components/landing/landing.module';
 import { HeaderComponent } from './components/header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { HeaderComponent } from './components/header/header.component';
 		LandingModule,
 		BrowserModule,
 		HttpClientModule,
-		AppRoutingModule
+		AppRoutingModule,
+  FontAwesomeModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
