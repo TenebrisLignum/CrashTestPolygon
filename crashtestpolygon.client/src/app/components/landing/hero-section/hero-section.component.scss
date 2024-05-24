@@ -1,4 +1,151 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
 .hero-section {
-    height: calc(100vh - 100px);
     background-color: #292F36;
+    color: white;
+}
+
+.hero__title {
+    @extend .font__bg-text-u;
+    display: flex;
+    justify-content: center;
+    padding: 64px;
+
+    .hero__title__text {
+        color: $color-brand2;
+    }
+}
+
+.hero__body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 128px;
+}
+
+.hero__frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 320px;
+    height: 520px;
+    padding-top: 37px;
+    border: 5px solid white;
+    border-radius: 150px 0px 150px 0px;
+    box-shadow: -5px -5px 5px $color-brand1;
+}
+
+.hero__frame__photo-name {
+    text-align: center;
+}
+
+.hero__frame__photo-name__img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 3px solid $color-brand2;
+}
+
+.hero__frame__photo-name_name {
+    @extend .font__logo-m;
+    margin-top: 16px;
+}
+
+.hero__frame__photo-name_position {
+    @extend .font__code-m;
+}
+
+.hero__frame__info {
+    padding-top: 16px;
+
+    div {
+        padding-top: 16px;
+    }
+}
+
+.hero__frame__info__icon {
+    display: inline-block;
+    width: 20px;
+}
+
+.hero__frame__info__text {
+    @extend .font__code-m;
+    padding-left: 16px;
+}
+
+.hero__frame__button {
+    @extend .font__button-u;
+    margin-top: 24px;
+    border-radius: 32px;
+    width: 227px;
+    height: 56px;
+
+    fa-icon {
+        color: black;
+        padding-left: 10px;
+    }
+}
+
+.hero__info {
+    width: 745px;
+    padding-left: 92px;
+}
+
+.hero__info__paragraph {
+    @extend .font__para-m;
+}
+
+.hero__info__text {
+    span {
+        color: $color-brand2;
+    }
+}
+
+.hero__info__text,
+.hero__info__cta {
+    padding: 10px 0px 10px 15px;
+    margin: 0px;
+}
+
+.tag {
+    @extend .font__code-m;
+    color: $color-brand2;
+}
+
+.hero__info__cta {
+    @extend .font__h2-m;
+    font-size: 28px;
+    color: $color-brand2;
+}
+
+.hero__highlight {
+    width: 215px;
+    height: 380px;
+    border-radius: 80px;
+    background-color: $color-bg2;
+    padding: 20px 0px;
+
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.hero__highlight__block__count {
+    @extend .font__number-m;
+    color: $color-brand2;
+
+    display: inline-block;
+}
+
+.hero__highlight__block__text {
+    @extend .font__para-m;
+    display: inline-block;
+
+    padding-left: 16px;
+    text-align: left;
 }

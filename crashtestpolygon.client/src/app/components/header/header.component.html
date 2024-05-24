@@ -1,3 +1,23 @@
-<header>
-    Works!
-</header>
+<div class="background">
+    <div class="container">
+        <div class="logo">
+            <span> <span class="tag">&lt;d/&gt; </span> ArtemHermaniuk </span>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-menu__block">
+                <span class="nav-menu__block__item"> Home</span>
+                <span class="nav-menu__block__item"> Blogs</span>
+            </div>
+            <div class="nav-menu__block__links">
+                <span class="nav-menu__block__links__item" (click)="onTelegram()">
+                    <fa-icon [icon]="faTelegram"></fa-icon>
+                    <span class="link-name"> Telegram</span>
+                </span>
+                <span class="nav-menu__block__links__item" (click)="onGitHub()">
+                    <fa-icon [icon]="faGitHub"></fa-icon>
+                    <span class="link-name"> GitHub</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
