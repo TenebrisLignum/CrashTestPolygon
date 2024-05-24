@@ -1,4 +1,26 @@
-header {
-    height: 100px;
+@import "../../../styles/colors.scss";
+
+.background {
     background-color: #292F36;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100px;
+}
+
+.tag {
+    color: $color-brand1;
+}
+
+.nav-menu__item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.nav-menu__item:hover {
+    color: $color-brand1;
 }
