@@ -1,16 +1,17 @@
 using Data;
+using Domain;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var presentationAssembly = Assembly.Load("Presentation");
-builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
+builder.Services.AddControllers()
+    .AddApplicationPart(Assembly.Load("Presentation"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddCors(o => o.AddPolicy("CrashTestPolygonPolicy", builder =>
+    .AddCors(o => o.AddPolicy(Consts.CORSName, builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
@@ -26,7 +27,7 @@ app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("CrashTestPolygonPolicy");
+    app.UseCors(Consts.CORSName);
     app.UseSwagger();
     app.UseSwaggerUI();
 }
