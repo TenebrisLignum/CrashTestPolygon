@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240526081733_Init")]
+    [Migration("20240529155203_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 #pragma warning restore 612, 618
         }

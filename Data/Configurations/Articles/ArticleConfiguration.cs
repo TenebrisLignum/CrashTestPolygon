@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Articles;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Configurations.Articles
+namespace Data.Configurations.Articles
 {
     public class ArticleConfiguration : IEntityConfiguration
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Configurations
+namespace Data.Configurations
 {
     public interface IEntityConfiguration
     {

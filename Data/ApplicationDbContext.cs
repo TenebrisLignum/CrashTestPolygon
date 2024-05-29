@@ -1,6 +1,5 @@
-﻿using Domain.Configurations;
+﻿using Data.Configurations;
 using Domain.Entities.Abstract;
-using Domain.Entities.Articles;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -8,7 +7,6 @@ namespace Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public virtual DbSet<Article> Articles { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -37,7 +35,8 @@ namespace Data
 
         private void AddEntities(ModelBuilder modelBuilder)
         {
-            var entityTypes = Assembly.GetAssembly(typeof(Entity)).GetTypes()
+            var entityTypes = Assembly.GetAssembly(typeof(Entity))
+                .GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Entity)));
 
             foreach (var type in entityTypes)

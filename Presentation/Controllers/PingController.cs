@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CrashTestPolygon.Server.Controllers
+namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
