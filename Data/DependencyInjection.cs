@@ -12,6 +12,7 @@ namespace Data
                 options.UseSqlServer(@"Server=DESKTOP-9F5QCG9\SQLEXPRESS; Database=CrashTestPolygon; Persist Security Info=false; MultipleActiveResultSets=True; Trusted_Connection=True; TrustServerCertificate=True;",
                     b => b.MigrationsAssembly("Data"));
             });
+
             return services;
         }
     }

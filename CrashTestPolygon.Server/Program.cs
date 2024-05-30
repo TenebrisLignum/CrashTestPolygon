@@ -1,14 +1,17 @@
 using Data;
 using Domain;
-using System.Reflection;
+using Application;
+using Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-    .AddApplicationPart(Assembly.Load("Presentation"));
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddData()
+    .AddApplication()
+    .AddPresentation();
 
 builder.Services
     .AddCors(o => o.AddPolicy(Consts.CORSName, builder =>
@@ -17,8 +20,6 @@ builder.Services
                .AllowAnyMethod()
                .AllowAnyHeader();
     }));
-
-builder.Services.AddData();
 
 var app = builder.Build();
 
@@ -35,6 +36,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.MapFallbackToFile("/index.html");
 
 app.Run();
