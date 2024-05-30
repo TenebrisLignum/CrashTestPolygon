@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Repository;
+using Domain.Repositories.Articles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Data
@@ -12,6 +14,8 @@ namespace Data
                 options.UseSqlServer(@"Server=DESKTOP-9F5QCG9\SQLEXPRESS; Database=CrashTestPolygon; Persist Security Info=false; MultipleActiveResultSets=True; Trusted_Connection=True; TrustServerCertificate=True;",
                     b => b.MigrationsAssembly("Data"));
             });
+
+            services.AddScoped<IArticleRepository, ArticleRepository>();
 
             return services;
         }

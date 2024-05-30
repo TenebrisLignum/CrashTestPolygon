@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Domain.Repositories.Articles;
+using FluentValidation;
+using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -11,7 +13,8 @@ namespace Application
 
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
             services.AddValidatorsFromAssembly(assembly);
-            
+            services.AddMapster();
+
             return services;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
 namespace Presentation
@@ -9,7 +8,7 @@ namespace Presentation
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             var assembly = Assembly.Load("Presentation");
-            
+
             services
                 .AddControllers()
                 .AddApplicationPart(assembly);

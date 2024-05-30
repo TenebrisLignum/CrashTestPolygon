@@ -16,9 +16,10 @@ namespace Data.Repository
             return _context.Set<Article>().Find(id);
         }
 
-        public void Insert(Article article)
+        public async Task Insert(Article article)
         {
-            _context.Set<Article>().Add(article);
+            await _context.Set<Article>().AddAsync(article);
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Article article)

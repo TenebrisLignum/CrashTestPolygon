@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Abstract;
+﻿using MediatR;
 
-namespace Domain.Entities.Articles
+namespace Application.Logic.Articles.Commands.CreateArticle
 {
-    public class Article : Entity
+    public sealed class CreateArticleCommand : IRequest<long>
     {
         public string Title { get; set; }
 
