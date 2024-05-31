@@ -1,6 +1,7 @@
 ﻿using Application.Messaging;
 using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
+using Domain.Exceptions;
 
 namespace Application.Logic.Articles.Queries.GetArticleById
 {
@@ -15,7 +16,7 @@ namespace Application.Logic.Articles.Queries.GetArticleById
 
         public async Task<Article?> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetById(request.Id);
+            return await _repository.GetById(request.Id) ?? throw new NotFoundException("Article");
         }
     }
 }

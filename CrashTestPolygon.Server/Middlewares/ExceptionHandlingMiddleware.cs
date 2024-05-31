@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domain.Exceptions;
+using FluentValidation;
 using System.Text.Json;
 
 namespace WebAPI.Middlewares
@@ -26,6 +27,7 @@ namespace WebAPI.Middlewares
         {
             var statusCode = exception switch
             {
+                NotFoundException => StatusCodes.Status404NotFound,
                 ValidationException => StatusCodes.Status422UnprocessableEntity,
                 _ => StatusCodes.Status500InternalServerError
             };
