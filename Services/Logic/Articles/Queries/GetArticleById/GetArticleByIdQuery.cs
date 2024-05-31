@@ -5,6 +5,6 @@ namespace Application.Logic.Articles.Queries.GetArticleById
 {
     public class GetArticleByIdQuery : IQuery<Article?>
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
     }
 }

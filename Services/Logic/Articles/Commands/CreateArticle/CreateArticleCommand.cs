@@ -2,7 +2,7 @@
 
 namespace Application.Logic.Articles.Commands.CreateArticle
 {
-    public sealed class CreateArticleCommand : ICommand<long>
+    public sealed class CreateArticleCommand : ICommand<int>
     {
         public string Title { get; set; }
 

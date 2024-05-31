@@ -10,7 +10,7 @@ namespace Data.Repository
 
         public ArticleRepository(ApplicationDbContext context) => _context = context;
 
-        public async Task<Article?> GetById(long id)
+        public async Task<Article?> GetById(int id)
         {
             return await _context
                 .Set<Article>()
@@ -38,7 +38,7 @@ namespace Data.Repository
                 .SaveChangesAsync();
         }
 
-        public async Task Delete(long id)
+        public async Task Delete(int id)
         {
             Article? article = await GetById(id);
 

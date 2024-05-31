@@ -6,7 +6,7 @@ using Mapster;
 
 namespace Application.Logic.Articles.Commands.CreateArticle
 {
-    public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand, long>
+    public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand, int>
     {
         private readonly IArticleRepository _repository;
         private readonly IValidator<CreateArticleCommand> _validator;
@@ -20,7 +20,7 @@ namespace Application.Logic.Articles.Commands.CreateArticle
             _validator = validator;
         }
 
-        public async Task<long> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
         {
             _validator.ValidateAndThrow(request);
 

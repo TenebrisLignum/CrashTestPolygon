@@ -2,13 +2,13 @@
 {
     public abstract class Entity
     {
-        public virtual long Id { get; protected set; }
+        public virtual int Id { get; protected set; }
 
         protected Entity()
         {
         }
 
-        protected Entity(long id)
+        protected Entity(int id)
         {
             Id = id;
         }
