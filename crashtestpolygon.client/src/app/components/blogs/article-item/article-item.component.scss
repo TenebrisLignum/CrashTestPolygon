@@ -1,0 +1,35 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
+.article {
+    display: flex;
+}
+
+.article__image {
+    width: 240px;
+}
+
+.article__content {
+    padding-left: 64px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.article__content__title {
+    @extend .font__h2-u;
+    color: $color-brand2;
+}
+
+.article__content__text {
+    @extend .font__para-u;
+}
+
+.article__content__created-date__label {
+    @extend .font__label-u-m;
+}
+
+.article__content__created-date__date {
+    @extend .font__label-u-l;
+}

@@ -4,25 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandingComponent } from './components/landing/landing.component';
-import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { HeroSectionComponent } from './components/landing/hero-section/hero-section.component';
 import { LandingModule } from './components/landing/landing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BlogsModule } from './components/blogs/blogs.module';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		NavMenuComponent,
-  HeaderComponent
+		HeaderComponent,
 	],
 	imports: [
 		LandingModule,
 		BrowserModule,
+		BlogsModule,
 		HttpClientModule,
 		AppRoutingModule,
-  FontAwesomeModule
+		FontAwesomeModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

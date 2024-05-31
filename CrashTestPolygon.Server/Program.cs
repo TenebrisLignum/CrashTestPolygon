@@ -1,39 +1,45 @@
+using Data;
+using Domain;
+using Application;
+using Presentation;
+using WebAPI.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddCors(o => o.AddPolicy("CrashTestPolygonPolicy", builder =>
+    .AddData()
+    .AddApplication()
+    .AddPresentation();
+
+builder.Services
+    .AddCors(o => o.AddPolicy(Consts.CORSName, builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader();
     }));
 
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("CrashTestPolygonPolicy");
+    app.UseCors(Consts.CORSName);
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
-app.MapFallbackToFile("/index.html");
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
