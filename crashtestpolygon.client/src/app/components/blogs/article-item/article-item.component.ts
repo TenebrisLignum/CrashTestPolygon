@@ -8,7 +8,7 @@ import { ArticleItemViewModel } from '../../../core/interfaces/view-models/artic
 })
 export class ArticleItemComponent {
 	@Input()
-	item!: ArticleItemViewModel;
+	article!: ArticleItemViewModel;
 
 	constructor() { }
 
