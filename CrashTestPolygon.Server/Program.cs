@@ -2,6 +2,7 @@ using Data;
 using Domain;
 using Application;
 using Presentation;
+using WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services
                .AllowAnyHeader();
     }));
 
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -36,5 +39,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
