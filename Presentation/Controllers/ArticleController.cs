@@ -17,7 +17,14 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery command)
+        public async Task<IActionResult> Get([FromQuery] GetArticleByFilterQuery command)
+        {
+            var article = await _sender.Send(command);
+            return Ok(article);
+        }
+
+        [HttpGet("table")]
+        public async Task<IActionResult> Table([FromQuery] GetArticleByFilterQuery command)
         {
             var article = await _sender.Send(command);
             return Ok(article);

@@ -18,6 +18,14 @@ namespace Data.Repository
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
+        public IQueryable<Article> GetAsQuery()
+        {
+            return _context
+                .Set<Article>()
+                .AsNoTracking()
+                .AsQueryable();
+        }
+
         public async Task Insert(Article article)
         {
             await _context
