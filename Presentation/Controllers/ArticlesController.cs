@@ -7,24 +7,24 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArticleController : ControllerBase
+    public class ArticlesController : ControllerBase
     {
         private readonly ISender _sender;
 
-        public ArticleController(ISender sender)
+        public ArticlesController(ISender sender)
         {
             _sender = sender;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetArticleByFilterQuery command)
+        public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery command)
         {
             var article = await _sender.Send(command);
             return Ok(article);
         }
 
-        [HttpGet("table")]
-        public async Task<IActionResult> Table([FromQuery] GetArticleByFilterQuery command)
+        [HttpGet("list")]
+        public async Task<IActionResult> List([FromQuery] GetArticleByFilterQuery command)
         {
             var article = await _sender.Send(command);
             return Ok(article);

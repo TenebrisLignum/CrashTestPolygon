@@ -18,7 +18,7 @@ namespace Application.Logic.Articles.Queries.GetArticleById
         {
             return await _repository
                 .GetAsQuery()
-                .Where(a => a.Id <= 2)
+                .OrderByDescending(a => a.CreatedDate)
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }
