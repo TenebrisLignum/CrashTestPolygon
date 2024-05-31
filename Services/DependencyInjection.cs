@@ -1,4 +1,5 @@
-﻿using Domain.Repositories.Articles;
+﻿using Application.Behaivors;
+using Domain.Repositories.Articles;
 using FluentValidation;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace Application
 
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
             services.AddValidatorsFromAssembly(assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddMapster();
 
             return services;

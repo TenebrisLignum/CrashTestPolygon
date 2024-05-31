@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository
 {
@@ -7,33 +8,47 @@ namespace Data.Repository
     {
         private readonly ApplicationDbContext _context;
 
-        public ArticleRepository(ApplicationDbContext context) { 
-            _context = context;
-        }
+        public ArticleRepository(ApplicationDbContext context) => _context = context;
 
-        public Article? GetById(int id)
+        public async Task<Article?> GetById(long id)
         {
-            return _context.Set<Article>().Find(id);
+            return await _context
+                .Set<Article>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task Insert(Article article)
         {
-            await _context.Set<Article>().AddAsync(article);
-            await _context.SaveChangesAsync();
+            await _context
+                .Set<Article>()
+                .AddAsync(article);
+
+            await _context
+                .SaveChangesAsync();
         }
 
-        public void Update(Article article)
+        public async Task Update(Article article)
         {
-            _context.Set<Article>().Update(article);
+            _context
+                .Set<Article>()
+                .Update(article);
+
+            await _context
+                .SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(long id)
         {
-            Article? article = GetById(id);
+            Article? article = await GetById(id);
+
             if (article != null)
-            {
-                _context.Set<Article>().Remove(article);
-            }
+                _context
+                    .Set<Article>()
+                    .Remove(article);
+
+            await _context
+                .SaveChangesAsync();
         }
     }
 }

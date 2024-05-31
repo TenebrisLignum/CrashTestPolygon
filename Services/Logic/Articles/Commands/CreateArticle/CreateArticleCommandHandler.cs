@@ -1,19 +1,32 @@
-﻿using Domain.Entities.Articles;
+﻿using Application.Messaging;
+using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
+using FluentValidation;
 using Mapster;
-using MediatR;
 
 namespace Application.Logic.Articles.Commands.CreateArticle
 {
-    public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, long>
+    public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand, long>
     {
         private readonly IArticleRepository _repository;
+        private readonly IValidator<CreateArticleCommand> _validator;
 
-        public CreateArticleCommandHandler(IArticleRepository repository) => _repository = repository;
+        public CreateArticleCommandHandler(
+            IArticleRepository repository,
+            IValidator<CreateArticleCommand> validator
+            )
+        {
+            _repository = repository;
+            _validator = validator;
+        }
 
         public async Task<long> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
         {
+            _validator.ValidateAndThrow(request);
+
             var article = request.Adapt<Article>();
+            article.CreatedDate = DateTime.UtcNow;
+
             await _repository.Insert(article);
 
             return article.Id;

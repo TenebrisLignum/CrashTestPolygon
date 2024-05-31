@@ -1,4 +1,5 @@
 ﻿using Application.Logic.Articles.Commands.CreateArticle;
+using Application.Logic.Articles.Queries.GetArticleById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +9,25 @@ namespace Presentation.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        private readonly ISender sender;
+        private readonly ISender _sender;
 
         public ArticleController(ISender sender)
         {
-            this.sender = sender;
+            _sender = sender;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery command)
+        {
+            var article = await _sender.Send(command);
+            return Ok(article);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateArticleCommand command)
         {
-            var productId = await sender.Send(command);
-            return Ok(productId);
+            var articleId = await _sender.Send(command);
+            return Ok(articleId);
         }
     }
 }

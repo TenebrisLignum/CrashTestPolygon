@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logic\Articles\Queries\" />
     <Folder Include="Mapping\" />
   </ItemGroup>
 
