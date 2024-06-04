@@ -1,6 +1,8 @@
 ﻿using Application.Logic.Articles.Commands.CreateArticle;
 using Application.Logic.Articles.Queries.GetArticleById;
+using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -31,6 +33,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Consts.AdminRoleString)]
         public async Task<IActionResult> Create(CreateArticleCommand command)
         {
             var articleId = await _sender.Send(command);

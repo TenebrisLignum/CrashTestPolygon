@@ -4,16 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class ArticlesService {
-	private readonly ApiUrl = environment.urlAddress + '/api/articles';
+    private readonly ApiUrl = environment.urlAddress + '/api/articles';
 
-	constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient) { }
 
-	list(): Observable<any> {
-		return this._http.get(this.ApiUrl + '/list');
-	}
-
+    list(): Observable<any> {
+        return this._http.get(this.ApiUrl + '/list');
+    }
 
 }
