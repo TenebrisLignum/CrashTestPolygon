@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ArticlesService } from '../../core/services/blogs.service';
+import { ArticlesService } from '../../core/services/articles.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
