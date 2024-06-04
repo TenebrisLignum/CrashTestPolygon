@@ -21,6 +21,8 @@ import { BlogsModule } from './components/blogs/blogs.module';
 		HttpClientModule,
 		AppRoutingModule,
 		FontAwesomeModule
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
 	],
 	providers: [],
 	bootstrap: [AppComponent]
