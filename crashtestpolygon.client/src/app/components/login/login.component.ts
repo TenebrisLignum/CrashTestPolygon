@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../core/services/alert.service';
 import { AuthResponseDto } from '../../core/interfaces/dto/auth/AuthResponseDto';
 import LocalStorageHelper from '../../core/helpers/localstorage.helper';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
 
     constructor(
         private _authService: AuthService,
-        private _alertService: AlertService
+        private _alertService: AlertService,
+        private _router: Router
     ) {
         this.loginForm = new FormGroup({
             email: new FormControl("", [Validators.required]),
@@ -30,9 +32,10 @@ export class LoginComponent {
             this._authService.login(this.loginForm.value)
                 .subscribe({
                     next: (res: AuthResponseDto) => {
-                        LocalStorageHelper.add("access_token", res.accessToken);
+                        LocalStorageHelper.updateTokens(res);
                         this._alertService.showSucsess("Welcome!");
 
+						this._router.navigate(['/']);
                         this.isRequestSent = false;
 
                     },

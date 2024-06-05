@@ -12,13 +12,14 @@ export class AuthService {
 
     constructor(
         private _http: HttpClient
-    ) {}
+    ) { }
 
     login(authDto: AuthDto): Observable<any> {
         return this._http.post(this.ApiUrl + '/login', authDto);
     }
 
-    refresh(refreshToken: string) {
-        return this._http.post(this.ApiUrl + '/refresh', refreshToken);
+    refresh(refreshToken: string): Observable<any> {
+        let body = { refreshToken: refreshToken }
+		return this._http.post(this.ApiUrl + '/refresh', body);
     }
 }
