@@ -3,6 +3,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../core/services/alert.service';
 import { AuthResponseDto } from '../../core/interfaces/dto/auth/AuthResponseDto';
+import LocalStorageHelper from '../../core/helpers/localstorage.helper';
 
 @Component({
     selector: 'app-login',
@@ -29,26 +30,21 @@ export class LoginComponent {
             this._authService.login(this.loginForm.value)
                 .subscribe({
                     next: (res: AuthResponseDto) => {
-                        this.isRequestSent = false;
+                        LocalStorageHelper.add("access_token", res.accessToken);
                         this._alertService.showSucsess("Welcome!");
 
-                        this._addToLocalStorage("access_token", res.accessToken);
-                    },
-                    error: (error) => {
-                        console.log(error);
                         this.isRequestSent = false;
 
+                    },
+                    error: (error) => {
                         this._alertService.showError(error.error.title);
+
+                        this.isRequestSent = false;
                     }
                 });
         else {
             this.isRequestSent = false;
             this._alertService.showWarning("Check your values");
         }
-    }
-
-    // TODO: create local storage helper
-    private _addToLocalStorage(key: string, value: string) {
-        localStorage.setItem(key, value)
     }
 }
