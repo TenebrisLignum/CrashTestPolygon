@@ -16,6 +16,7 @@ export default class LocalStorageHelper {
         return this.get(ACCESS_TONKEN_KEY);
     }
 
+    // TODO: Move refresh token from the local storage
     static updateTokens(tokens: AuthResponseDto) {
         this.set(ACCESS_TONKEN_KEY, tokens.accessToken);
         this.set(REFRESH_TONKEN_KEY, tokens.refreshToken);

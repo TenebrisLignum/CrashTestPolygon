@@ -34,8 +34,9 @@ export class LoginComponent {
                     next: (res: AuthResponseDto) => {
                         LocalStorageHelper.updateTokens(res);
                         this._alertService.showSucsess("Welcome!");
+                        this._authService.sendAuthStateChangeNotification(true);
 
-						this._router.navigate(['/']);
+                        this._router.navigate(['/']);
                         this.isRequestSent = false;
 
                     },
