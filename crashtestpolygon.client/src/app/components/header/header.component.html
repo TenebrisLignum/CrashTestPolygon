@@ -5,8 +5,9 @@
         </div>
         <div class="nav-menu">
             <div class="nav-menu__block">
-                <span class="nav-menu__block__item"> Home</span>
+                <span class="nav-menu__block__item" routerLink="/"> Home</span>
                 <span class="nav-menu__block__item" routerLink="/blogs"> Blogs</span>
+                <span *ngIf="isUserAuthenticated" (click)="logout()" class="nav-menu__block__item"> Logout </span>
             </div>
             <div class="nav-menu__block__links">
                 <span class="nav-menu__block__links__item" (click)="onTelegram()">
