@@ -1,22 +1,4 @@
-@import "../../../styles/colors.scss";
-@import "../../../styles/fonts.scss";
-
 .blogs-section {
     background-color: #292F36;
-}
-
-.blogs__title {
-    @extend .font__h1-u;
-    color: $color-brand2;
-    text-align: center;
-    padding: 64px;
-}
-
-.blog__articles {
-    display: flex;
-    flex-direction: column;
-}
-
-.blog__articles__article {
-    width: 100%;
+    min-height: 100vh;
 }
