@@ -23,9 +23,9 @@ namespace Presentation.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery command)
+        public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery query)
         {
-            var article = await _sender.Send(command);
+            var article = await _sender.Send(query);
             return Ok(article);
         }
 
