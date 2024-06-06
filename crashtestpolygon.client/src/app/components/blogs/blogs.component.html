@@ -1,17 +1,5 @@
 <section class="blogs-section">
     <div class="container">
-        <div class="row">
-            <h1 class="blogs__title">Blogs</h1>
-        </div>
-        <hr>
-
-        <div class="row">
-            <div class="blog__articles">
-                <div class="blog__articles__article" *ngFor="let article of articles">
-                    <app-article-item [article]="article"></app-article-item>
-                    <hr>
-                </div>
-            </div>
-        </div>
+        <router-outlet></router-outlet>
     </div>
 </section>

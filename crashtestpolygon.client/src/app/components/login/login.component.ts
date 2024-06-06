@@ -3,6 +3,8 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../core/services/alert.service';
 import { AuthResponseDto } from '../../core/interfaces/dto/auth/AuthResponseDto';
+import LocalStorageHelper from '../../core/helpers/localstorage.helper';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginComponent {
 
     constructor(
         private _authService: AuthService,
-        private _alertService: AlertService
+        private _alertService: AlertService,
+        private _router: Router
     ) {
         this.loginForm = new FormGroup({
             email: new FormControl("", [Validators.required]),
@@ -29,26 +32,23 @@ export class LoginComponent {
             this._authService.login(this.loginForm.value)
                 .subscribe({
                     next: (res: AuthResponseDto) => {
-                        this.isRequestSent = false;
+                        LocalStorageHelper.updateTokens(res);
                         this._alertService.showSucsess("Welcome!");
+                        this._authService.sendAuthStateChangeNotification(true);
 
-                        this._addToLocalStorage("access_token", res.accessToken);
+                        this._router.navigate(['/']);
+                        this.isRequestSent = false;
+
                     },
                     error: (error) => {
-                        console.log(error);
-                        this.isRequestSent = false;
-
                         this._alertService.showError(error.error.title);
+
+                        this.isRequestSent = false;
                     }
                 });
         else {
             this.isRequestSent = false;
             this._alertService.showWarning("Check your values");
         }
-    }
-
-    // TODO: create local storage helper
-    private _addToLocalStorage(key: string, value: string) {
-        localStorage.setItem(key, value)
     }
 }

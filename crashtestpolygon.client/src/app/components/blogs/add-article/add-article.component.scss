@@ -1,0 +1,29 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
+.form__title {
+    @extend .font__h1-u;
+    color: $color-brand2;
+    text-align: center;
+    padding: 64px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.form__block {
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
