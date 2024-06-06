@@ -1,4 +1,6 @@
 ﻿using Application.Logic.Articles.Commands.CreateArticle;
+using Application.Logic.Articles.Commands.DeleteArticle;
+using Application.Logic.Articles.Commands.UpdateArticle;
 using Application.Logic.Articles.Queries.GetArticleById;
 using Domain;
 using MediatR;
@@ -9,6 +11,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = Consts.AdminRoleString)]
     public class ArticlesController : ControllerBase
     {
         private readonly ISender _sender;
@@ -19,6 +22,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get([FromQuery] GetArticleByIdQuery command)
         {
             var article = await _sender.Send(command);
@@ -26,6 +30,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("list")]
+        [AllowAnonymous]
         public async Task<IActionResult> List([FromQuery] GetArticleByFilterQuery command, CancellationToken cancellationToken)
         {
             var article = await _sender.Send(command, cancellationToken);
@@ -33,8 +38,21 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Consts.AdminRoleString)]
         public async Task<IActionResult> Create(CreateArticleCommand command)
+        {
+            var articleId = await _sender.Send(command);
+            return Ok(articleId);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateArticleCommand command)
+        {
+            var articleId = await _sender.Send(command);
+            return Ok(articleId);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteArticleCommand command)
         {
             var articleId = await _sender.Send(command);
             return Ok(articleId);

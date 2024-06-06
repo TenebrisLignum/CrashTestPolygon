@@ -11,7 +11,7 @@ namespace Application.Logic.Articles.Commands.CreateArticle
 
             RuleFor(command => command.Text)
                 .NotEmpty()
-                .WithMessage("The article title cannot be empty.");
+                .WithMessage("The article cannot be empty.");
         }
     }
 }
