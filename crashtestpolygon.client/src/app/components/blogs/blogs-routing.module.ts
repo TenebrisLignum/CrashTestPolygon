@@ -4,6 +4,7 @@ import { AddArticleComponent } from "./add-article/add-article.component";
 import { NgModule } from "@angular/core";
 import { ArticlesListComponent } from "./articles-list/articles-list.component";
 import { AdminGuard } from "../../core/guards/admin.guard";
+import { EditArticleComponent } from "./edit-article/edit-article.component";
 
 const blogsRoutes: Routes = [
     {
@@ -11,7 +12,8 @@ const blogsRoutes: Routes = [
         component: BlogsComponent,
         children: [
             { path: '', component: ArticlesListComponent },
-            { path: 'add', component: AddArticleComponent, canActivate: [AdminGuard] }
+            { path: 'add', component: AddArticleComponent, canActivate: [AdminGuard] },
+            { path: 'edit/:id', component: EditArticleComponent, canActivate: [AdminGuard] }
         ]
     }
 ];

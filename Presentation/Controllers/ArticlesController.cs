@@ -52,7 +52,7 @@ namespace Presentation.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteArticleCommand command)
+        public async Task<IActionResult> Delete([FromQuery] DeleteArticleCommand command)
         {
             var articleId = await _sender.Send(command);
             return Ok(articleId);

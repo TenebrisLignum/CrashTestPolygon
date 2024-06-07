@@ -14,10 +14,22 @@
 }
 
 .blog__articles__article {
+    display: flex;
+    padding: 20px 0px;
+    border-top: 1px solid gray;
     width: 100%;
 }
 
 .add-icon {
     color: $color-brand2;
     cursor: pointer;
+}
+
+.article__action-buttons {
+    margin-left: auto;
+
+    fa-icon {
+        padding-left: 10px;
+        cursor: pointer;
+    }
 }
