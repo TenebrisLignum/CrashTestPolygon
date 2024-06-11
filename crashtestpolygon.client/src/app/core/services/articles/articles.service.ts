@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreateArticleDto } from '../interfaces/dto/articles/CreateArticleDto';
-import { UpdateArticleDto } from '../interfaces/dto/articles/UpdateArticleDto';
+import { CreateArticleDto } from '../../interfaces/dto/articles/CreateArticleDto';
+import { UpdateArticleDto } from '../../interfaces/dto/articles/UpdateArticleDto';
 
 @Injectable({
     providedIn: 'root'

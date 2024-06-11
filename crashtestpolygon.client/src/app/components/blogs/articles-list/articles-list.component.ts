@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { faEdit, faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
-import { ArticlesService } from '../../../core/services/articles.service';
+import { ArticlesService } from '../../../core/services/articles/articles.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { AlertService } from '../../../core/services/alert.service';
 import { Router } from '@angular/router';
