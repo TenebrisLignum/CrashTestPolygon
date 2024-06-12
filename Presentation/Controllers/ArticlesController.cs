@@ -33,8 +33,8 @@ namespace Presentation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> List([FromQuery] GetArticleByFilterQuery command, CancellationToken cancellationToken)
         {
-            var article = await _sender.Send(command, cancellationToken);
-            return Ok(article);
+            var articles = await _sender.Send(command, cancellationToken);
+            return Ok(articles);
         }
 
         [HttpPost]

@@ -22,9 +22,6 @@ import { EditArticleComponent } from './edit-article/edit-article.component';
         BrowserModule,
         FontAwesomeModule,
         ReactiveFormsModule
-    ],
-    bootstrap: [
-        BlogsComponent
     ]
 })
 

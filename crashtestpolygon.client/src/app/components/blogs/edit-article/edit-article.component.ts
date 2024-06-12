@@ -5,7 +5,6 @@ import { AlertService } from '../../../core/services/alert.service';
 import { ArticlesService } from '../../../core/services/articles/articles.service';
 import { UpdateArticleDto } from '../../../core/interfaces/dto/articles/UpdateArticleDto';
 import { ArticleItemViewModel } from '../../../core/interfaces/view-models/articles/article';
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
     selector: 'app-update-article',
