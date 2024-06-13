@@ -33,3 +33,41 @@
         cursor: pointer;
     }
 }
+
+// Modal
+
+dialog {
+    background-color: $color-bg1;
+    border-radius: 10px;
+    border-color: $color-brand2;
+}
+
+::backdrop {
+    background-color: black;
+    opacity: 0.5;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-title {
+    @extend .font__h2-u;
+    color: $color-brand2;
+    padding-bottom: 10px;
+}
+
+.modal-body {
+    @extend .font__para-u;
+    padding-bottom: 30px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+        margin-left: 10px;
+    }
+}

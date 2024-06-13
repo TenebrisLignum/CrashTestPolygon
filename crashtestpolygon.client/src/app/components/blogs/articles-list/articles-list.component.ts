@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { faEdit, faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
 import { ArticlesService } from '../../../core/services/articles/articles.service';
@@ -13,14 +13,18 @@ import { ArticleItemViewModel } from '../../../core/interfaces/view-models/artic
     styleUrl: './articles-list.component.scss'
 })
 export class ArticlesListComponent {
+    @ViewChild('dialog') dialog: any;
+
+    isAdmin: boolean = false;
+    articles: ArticleItemViewModel[] = [];
+
+    articleToDeleteId: number;
+
     faPlus = faPlus;
     faEdit = faPencil;
     faDelete = faTrash;
 
-    isAdmin: boolean = false;
-
     private readonly destroy$ = new Subject<void>();
-    articles: ArticleItemViewModel[] = [];
 
     constructor(
         private _articlesService: ArticlesService,
@@ -45,9 +49,16 @@ export class ArticlesListComponent {
     }
 
     onDelete(id: number) {
-        this._articlesService.delete(id).subscribe({
-            next: (res) => {
-                this.articles = this.articles.filter(x => x.id != id);
+        this.articleToDeleteId = id;
+        this.dialog.nativeElement.showModal();
+    }
+
+    onDialogConfirm() {
+        this._articlesService.delete(this.articleToDeleteId).subscribe({
+            next: (res: number) => {
+                this.articles = this.articles.filter(x => x.id != res);
+                this.articleToDeleteId = 0;
+                this.dialog.nativeElement.close();
                 this._alertService.showSucsess("Article was deleted!");
             },
             error: (e) => {
@@ -55,6 +66,10 @@ export class ArticlesListComponent {
                 this._alertService.showError(e.error.title);
             }
         })
+    }
+
+    onDialogCancel() {
+        this.dialog.nativeElement.close();
     }
 
     private _getArticles() {

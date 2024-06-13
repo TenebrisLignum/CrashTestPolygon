@@ -10,7 +10,24 @@
             <div class="article__action-buttons">
                 <fa-icon [icon]="faEdit" (click)="onEdit(article.id)"></fa-icon>
                 <fa-icon [icon]="faDelete" (click)="onDelete(article.id)"></fa-icon>
+                <button (click)="dialog.showModal()">Show dialog</button>
+
             </div>
         </div>
     </div>
 </div>
+
+<dialog #dialog>
+    <div class="modal-content">
+        <div class="modal-title">
+            Warning!
+        </div>
+        <div class="modal-body">
+            Are you sure want to delete this article?
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-light" (click)="onDialogConfirm()">Ok</button>
+            <button class="btn btn-light" (click)="onDialogCancel()">Cancel</button>
+        </div>
+    </div>
+</dialog>
