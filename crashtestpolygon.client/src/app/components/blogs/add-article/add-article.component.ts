@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ArticlesService } from '../../../core/services/articles.service';
+import { ArticlesService } from '../../../core/services/articles/articles.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateArticleDto } from '../../../core/interfaces/dto/articles/CreateArticleDto';
 import { AlertService } from '../../../core/services/alert.service';

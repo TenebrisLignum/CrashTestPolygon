@@ -1,14 +1,35 @@
-<div class="row">
+<div class="row" *ngIf="isLoaded">
     <h1 class="blogs__title">Blogs <fa-icon class="add-icon" *ngIf="isAdmin" [icon]="faPlus"
             routerLink="/blogs/add"></fa-icon></h1>
 </div>
-<hr>
 
 <div class="row">
-    <div class="blog__articles">
+    <div class="blog__articles" *ngIf="isLoaded">
         <div class="blog__articles__article" *ngFor="let article of articles">
             <app-article-item [article]="article"></app-article-item>
-            <hr>
+            <div *ngIf="isAdmin" class="article__action-buttons">
+                <fa-icon [icon]="faEdit" (click)="onEdit(article.id)"></fa-icon>
+                <fa-icon [icon]="faDelete" (click)="onDelete(article.id)"></fa-icon>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="row spinner" *ngIf="!isLoaded">
+    <app-large-spinner></app-large-spinner>
+</div>
+
+<dialog #dialog>
+    <div class="modal-content">
+        <div class="modal-title">
+            Warning!
+        </div>
+        <div class="modal-body">
+            Are you sure want to delete this article?
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-light" (click)="onDialogConfirm()">Ok</button>
+            <button class="btn btn-light" (click)="onDialogCancel()">Cancel</button>
+        </div>
+    </div>
+</dialog>
