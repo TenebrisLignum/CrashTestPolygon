@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row" *ngIf="isLoaded">
     <h1 class="blogs__title">Blogs <fa-icon class="add-icon" *ngIf="isAdmin" [icon]="faPlus"
             routerLink="/blogs/add"></fa-icon></h1>
 </div>
 
 <div class="row">
-    <div class="blog__articles">
+    <div class="blog__articles" *ngIf="isLoaded">
         <div class="blog__articles__article" *ngFor="let article of articles">
             <app-article-item [article]="article"></app-article-item>
             <div *ngIf="isAdmin" class="article__action-buttons">
@@ -13,6 +13,10 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="row spinner" *ngIf="!isLoaded">
+    <app-large-spinner></app-large-spinner>
 </div>
 
 <dialog #dialog>

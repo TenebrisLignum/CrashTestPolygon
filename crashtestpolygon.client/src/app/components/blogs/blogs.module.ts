@@ -8,6 +8,7 @@ import { BlogsRoutingModule } from './blogs-routing.module';
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditArticleComponent } from './edit-article/edit-article.component';
+import { LargeSpinnerComponent } from '../../core/shared/large-spinner/large-spinner.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { EditArticleComponent } from './edit-article/edit-article.component';
         BlogsRoutingModule,
         BrowserModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LargeSpinnerComponent
     ]
 })
 

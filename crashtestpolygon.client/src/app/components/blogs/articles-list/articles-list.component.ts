@@ -16,8 +16,9 @@ export class ArticlesListComponent {
     @ViewChild('dialog') dialog: any;
 
     isAdmin: boolean = false;
-    articles: ArticleItemViewModel[] = [];
+    isLoaded: boolean = false;
 
+    articles: ArticleItemViewModel[] = [];
     articleToDeleteId: number;
 
     faPlus = faPlus;
@@ -78,8 +79,10 @@ export class ArticlesListComponent {
             .subscribe({
                 next: (result) => {
                     this.articles = result;
+                    this.isLoaded = true;
                 },
                 error: (error) => {
+                    this.isLoaded = true;
                     console.log(error);
                 }
             });
