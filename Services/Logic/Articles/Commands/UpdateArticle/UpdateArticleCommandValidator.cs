@@ -10,6 +10,10 @@ namespace Application.Logic.Articles.Commands.UpdateArticle
                 .NotNull()
                 .WithMessage("Article Id cannot be null.");
 
+            RuleFor(command => command.Id)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage("Article Id cannot be less than 1.");
+
             RuleFor(command => command.Title)
                 .NotEmpty()
                 .WithMessage("The article title cannot be empty.");
