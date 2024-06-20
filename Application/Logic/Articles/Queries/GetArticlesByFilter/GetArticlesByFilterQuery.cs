@@ -3,7 +3,5 @@ using Domain.Entities.Articles;
 
 namespace Application.Logic.Articles.Queries.GetArticleById
 {
-    public class GetArticleByFilterQuery : IQuery<List<Article>>
-    {
-    }
+    public sealed record GetArticlesByFilterQuery : IQuery<List<Article>>;
 }

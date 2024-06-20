@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Logic.Articles.Queries.GetArticleById
 {
-    public class GetArticleByFilterQueryHandler : IQueryHandler<GetArticleByFilterQuery, List<Article>>
+    public class GetArticlesByFilterQueryHandler : IQueryHandler<GetArticlesByFilterQuery, List<Article>>
     {
         private readonly IArticleRepository _repository;
 
-        public GetArticleByFilterQueryHandler(IArticleRepository repository)
+        public GetArticlesByFilterQueryHandler(IArticleRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<Article>> Handle(GetArticleByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<List<Article>> Handle(GetArticlesByFilterQuery request, CancellationToken cancellationToken)
         {
             return await _repository
                 .GetAsQuery()
