@@ -5,7 +5,8 @@ import { ArticlesService } from '../../../core/services/articles/articles.servic
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { AlertService } from '../../../core/services/alert.service';
 import { Router } from '@angular/router';
-import { ArticleItemViewModel } from '../../../core/interfaces/view-models/articles/article';
+import { ArticleItemViewModel } from '../../../core/interfaces/view-models/articles/ArticleItemViewModel';
+import { PagedList } from '../../../core/interfaces/view-models/PagedList';
 
 @Component({
     selector: 'app-articles-list',
@@ -77,8 +78,8 @@ export class ArticlesListComponent {
         this._articlesService.list()
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (result) => {
-                    this.articles = result;
+                next: (result: PagedList<ArticleItemViewModel>) => {
+                    this.articles = result.items;
                     this.isLoaded = true;
                 },
                 error: (error) => {
