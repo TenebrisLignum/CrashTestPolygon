@@ -1,4 +1,6 @@
 @import 'ngx-toastr/toastr';
+@import "styles/fonts.scss";
+@import "styles/colors.scss";
 
 .ngx-toastr {
     box-shadow: none !important;
@@ -11,4 +13,19 @@ fa-icon {
 .error-input {
     border-color: #dc3545;
     border-width: 2px;
+}
+
+.custom-button {
+    @extend .font__button-u;
+    width: 160px;
+    height: 56px;
+    border-radius: 50px;
+    background-color: $color-bg1;
+    border: 3px $color-brand2 solid;
+    color: white;
+}
+
+.custom-button:hover {
+    background-color: $color-brand2;
+    color: $color-bg1;
 }
