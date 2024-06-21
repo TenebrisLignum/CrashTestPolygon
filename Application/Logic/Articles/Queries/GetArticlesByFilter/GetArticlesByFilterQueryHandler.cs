@@ -1,11 +1,11 @@
-﻿using Application.Messaging;
+﻿using Application.Common;
+using Application.Messaging;
 using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Logic.Articles.Queries.GetArticleById
 {
-    public class GetArticlesByFilterQueryHandler : IQueryHandler<GetArticlesByFilterQuery, List<Article>>
+    public class GetArticlesByFilterQueryHandler : IQueryHandler<GetArticlesByFilterQuery, PagedList<Article>>
     {
         private readonly IArticleRepository _repository;
 
@@ -14,12 +14,19 @@ namespace Application.Logic.Articles.Queries.GetArticleById
             _repository = repository;
         }
 
-        public async Task<List<Article>> Handle(GetArticlesByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<PagedList<Article>> Handle(GetArticlesByFilterQuery request, CancellationToken cancellationToken)
         {
-            return await _repository
-                .GetAsQuery()
-                .OrderByDescending(a => a.CreatedDate)
-                .ToListAsync(cancellationToken: cancellationToken);
+            var query = _repository
+                .GetAsQuery();
+
+            if (!string.IsNullOrWhiteSpace(request.SearchWord))
+                query = query
+                    .Where(a => a.Title.Contains(request.SearchWord));
+
+            query = query
+                .OrderByDescending(a => a.CreatedDate);
+
+            return await PagedList<Article>.CreateAsync(query, request.Page, request.PageSize);
         }
     }
 }
