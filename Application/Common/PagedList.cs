@@ -14,7 +14,6 @@ namespace Application.Common
         public List<T> Items { get; }
         public int Page { get; }
         public int PageSize { get; }
-        public int CurrentPage { get; }
         public int TotalCount { get; }
 
         public bool HasNextPage => Page * PageSize < TotalCount;
