@@ -2,24 +2,11 @@
 
 namespace Application.Logic.Articles.Commands.UpdateArticle
 {
-    public sealed class UpdateArticleCommand : ICommand<int>
-    {
-        public UpdateArticleCommand
+    public sealed record UpdateArticleCommand
         (
-            int id,
-            string title,
-            string text
+            int Id,
+            string Title,
+            string Text
         )
-        {
-            Id = id;
-            Title = title;
-            Text = text;
-        }
-
-        public int Id { get; set; }
-
-        public string Title { get; set; }
-
-        public string Text { get; set; }
-    }
+        : ICommand<int>;
 }

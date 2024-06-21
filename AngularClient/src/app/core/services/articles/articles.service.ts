@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CreateArticleDto } from '../../interfaces/dto/articles/CreateArticleDto';
 import { UpdateArticleDto } from '../../interfaces/dto/articles/UpdateArticleDto';
+import { GetArticlesByFilterQueryDto } from '../../interfaces/dto/articles/GetArticlesByFilterQueryDto';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +18,19 @@ export class ArticlesService {
         return this._http.get(this.ApiUrl + '?id=' + id.toString())
     }
 
-    list(): Observable<any> {
-        return this._http.get(this.ApiUrl + '/list');
+    list(filter: GetArticlesByFilterQueryDto): Observable<any> {
+        let params = new HttpParams();
+
+        if (filter.searchWord) {
+            params = params.set('searchWord', filter.searchWord);
+        }
+        if (filter.pageSize) {
+            params = params.set('pageSize', filter.pageSize.toString());
+        }
+        if (filter.page) {
+            params = params.set('page', filter.page.toString());
+        }
+        return this._http.get(this.ApiUrl + '/list', { params });
     }
 
     create(body: CreateArticleDto): Observable<any> {

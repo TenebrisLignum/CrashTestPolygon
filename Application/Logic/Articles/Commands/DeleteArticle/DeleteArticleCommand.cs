@@ -2,8 +2,9 @@
 
 namespace Application.Logic.Articles.Commands.DeleteArticle
 {
-    public class DeleteArticleCommand : ICommand<int>
-    {
-        public int Id { get; set; }
-    }
+    public sealed record DeleteArticleCommand
+        (
+            int Id
+        )
+        : ICommand<int>;
 }

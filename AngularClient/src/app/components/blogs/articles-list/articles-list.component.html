@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="blog__articles" *ngIf="isLoaded">
-        <div class="blog__articles__article" *ngFor="let article of articles">
+        <div class="blog__articles__article" *ngFor="let article of articlesList.items">
             <app-article-item [article]="article"></app-article-item>
             <div *ngIf="isAdmin" class="article__action-buttons">
                 <fa-icon [icon]="faEdit" (click)="onEdit(article.id)"></fa-icon>
@@ -13,7 +13,19 @@
             </div>
         </div>
     </div>
+
+    <div class="text-center articles-actions">
+        <button class="custom-button" *ngIf="articlesList.hasPreviousPage" (click)="onPreviousPage()">
+            Previous Page
+        </button>
+
+        <button class="custom-button" *ngIf="articlesList.hasNextPage" (click)="onNextPage()">
+            Next Page
+        </button>
+    </div>
 </div>
+
+
 
 <div class="row spinner" *ngIf="!isLoaded">
     <app-large-spinner></app-large-spinner>

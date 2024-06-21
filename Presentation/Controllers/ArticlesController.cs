@@ -31,9 +31,9 @@ namespace Presentation.Controllers
 
         [HttpGet("list")]
         [AllowAnonymous]
-        public async Task<IActionResult> List([FromQuery] GetArticleByFilterQuery command, CancellationToken cancellationToken)
+        public async Task<IActionResult> List([FromQuery] GetArticlesByFilterQuery query, CancellationToken cancellationToken)
         {
-            var articles = await _sender.Send(command, cancellationToken);
+            var articles = await _sender.Send(query, cancellationToken);
             return Ok(articles);
         }
 
