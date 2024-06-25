@@ -96,6 +96,7 @@ export class ArticlesListComponent {
                 next: (result: PagedList<ArticleItemViewModel>) => {
                     this.articlesList = result;
                     this.isLoaded = true;
+                    window.scrollTo(0, 0);
                 },
                 error: (error) => {
                     this.isLoaded = true;

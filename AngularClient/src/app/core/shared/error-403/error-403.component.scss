@@ -1,0 +1,19 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
+.title {
+    color: $color-brand2;
+    padding: 64px;
+}
+
+.error-code {
+    @extend .font__bg-text-u;
+}
+
+.error-subtitle {
+    @extend .font__h2-u;
+}
+
+p {
+    @extend .font__para-m;
+}

@@ -4,6 +4,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import LocalStorageHelper from '../helpers/localstorage.helper';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -12,7 +13,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     constructor(
-        private _authService: AuthService
+        private _authService: AuthService,
+        private _router: Router
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,6 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     return this.handle401Error(req, next);
                 } else {
+                    this._router.navigate(['/unauthorized']);
                     return throwError(error);
                 }
             })

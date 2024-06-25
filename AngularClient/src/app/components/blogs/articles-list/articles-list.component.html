@@ -3,8 +3,8 @@
             routerLink="/blogs/add"></fa-icon></h1>
 </div>
 
-<div class="row">
-    <div class="blog__articles" *ngIf="isLoaded">
+<div class="row" *ngIf="isLoaded">
+    <div class="blog__articles">
         <div class="blog__articles__article" *ngFor="let article of articlesList.items">
             <app-article-item [article]="article"></app-article-item>
             <div *ngIf="isAdmin" class="article__action-buttons">
