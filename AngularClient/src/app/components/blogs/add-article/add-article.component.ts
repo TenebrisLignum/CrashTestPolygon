@@ -41,6 +41,7 @@ export class AddArticleComponent {
             },
             error: (e) => {
                 this._alertService.showError(e.error.title);
+                this.isRequestSent = false;
             }
         }
         );

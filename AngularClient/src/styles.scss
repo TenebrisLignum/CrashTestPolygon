@@ -2,6 +2,10 @@
 @import "styles/fonts.scss";
 @import "styles/colors.scss";
 
+body {
+    background-color: $color-bg1;
+}
+
 .ngx-toastr {
     box-shadow: none !important;
 }
