@@ -1,0 +1,44 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/fonts.scss";
+
+.title {
+    @extend .font__h1-u;
+    color: $color-brand2;
+    text-align: center;
+    padding: 64px;
+}
+
+.feature {
+    display: flex;
+    cursor: pointer;
+}
+
+.feature:hover {
+    .feature__content {
+        .feature__content__title {
+            text-decoration: underline;
+        }
+    }
+}
+
+.feature__image {
+    width: 240px;
+}
+
+.feature__content {
+    padding-left: 64px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.feature__content__title {
+    @extend .font__h2-u;
+    color: $color-brand2;
+
+    padding-bottom: 20px;
+}
+
+.feature__content__text {
+    @extend .font__para-u;
+}

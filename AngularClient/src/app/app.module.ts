@@ -14,13 +14,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { interceptorProviders } from './core/interceptors/interceptorProviders';
+import { FeaturesComponent } from './components/features/features.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
-        LoginComponent
+        LoginComponent,
+        FeaturesComponent
     ],
     imports: [
         LandingModule,
