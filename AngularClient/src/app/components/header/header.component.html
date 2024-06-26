@@ -5,18 +5,18 @@
         </div>
         <div class="nav-menu">
             <div class="nav-menu__block">
-                <span class="nav-menu__block__item" routerLink="/"> Home</span>
-                <span class="nav-menu__block__item" routerLink="/features"> Features</span>
+                <span class="nav-menu__block__item" routerLink="/"> Home </span>
+                <span class="nav-menu__block__item" routerLink="/features"> Features </span>
                 <span *ngIf="isUserAuthenticated" (click)="logout()" class="nav-menu__block__item"> Logout </span>
             </div>
             <div class="nav-menu__block__links">
                 <span class="nav-menu__block__links__item" (click)="onTelegram()">
                     <fa-icon [icon]="faTelegram"></fa-icon>
-                    <span class="link-name"> Telegram</span>
+                    <span class="link-name"> Telegram </span>
                 </span>
                 <span class="nav-menu__block__links__item" (click)="onGitHub()">
                     <fa-icon [icon]="faGitHub"></fa-icon>
-                    <span class="link-name"> GitHub</span>
+                    <span class="link-name"> GitHub </span>
                 </span>
             </div>
         </div>
