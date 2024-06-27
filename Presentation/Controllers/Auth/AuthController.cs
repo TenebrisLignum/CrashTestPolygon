@@ -25,7 +25,7 @@ namespace Presentation.Controllers.Auth
             _userManager = userManager;
         }
 
-        [HttpPost("/register")]
+        [HttpPost("/signup")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
             var result = await _sender.Send(command);

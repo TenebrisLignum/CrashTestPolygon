@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { AuthDto } from '../../interfaces/dto/auth/AuthDto';
-import LocalStorageHelper from '../../helpers/localstorage.helper';
+import { SignUpDto } from '../../interfaces/dto/auth/SignUpDto';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +22,11 @@ export class AuthService {
         return this._http.post(this.ApiUrl + '/login', authDto);
     }
 
+    signup(sigUpDto: SignUpDto): Observable<any> {
+        return this._http.post(this.ApiUrl + '/signup', sigUpDto);
+
+    }
+
     sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
         this.authChangeSub.next(isAuthenticated);
     }
@@ -33,7 +38,7 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-		return !!localStorage.getItem('token');
+        return !!localStorage.getItem('token');
     }
 
     // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION

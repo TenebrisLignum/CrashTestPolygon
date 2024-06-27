@@ -16,13 +16,15 @@ import { interceptorProviders } from './core/interceptors/interceptorProviders';
 import { FeaturesComponent } from './components/features/features.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import LocalStorageHelper from './core/helpers/localstorage.helper';
+import { SignupComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         LoginComponent,
-        FeaturesComponent
+        FeaturesComponent,
+        SignupComponent
     ],
     imports: [
         LandingModule,
