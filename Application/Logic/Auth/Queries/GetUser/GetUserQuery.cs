@@ -5,7 +5,7 @@ namespace Application.Logic.Auth.Queries.GetUser
 {
     public sealed record GetUserQuery
         (
-            string Username,
+            string Email,
             string Password,
             bool RememberMe = true
         )

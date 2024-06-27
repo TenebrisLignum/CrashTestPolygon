@@ -20,7 +20,7 @@ export class LoginComponent {
         private _router: Router
     ) {
         this.loginForm = new FormGroup({
-            username: new FormControl("", [Validators.required]),
+            email: new FormControl("", [Validators.required]),
             password: new FormControl("", [Validators.required])
         });
     }

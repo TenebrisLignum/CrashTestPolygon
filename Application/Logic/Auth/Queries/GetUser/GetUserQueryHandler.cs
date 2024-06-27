@@ -17,7 +17,7 @@ namespace Application.Logic.Auth.Queries.GetUser
 
         public async Task<ApplicationUser?> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(request.Username);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             return user;
         }
     }
