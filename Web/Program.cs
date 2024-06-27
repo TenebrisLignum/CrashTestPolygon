@@ -5,6 +5,9 @@ using Presentation;
 using WebAPI.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities.Users;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,18 +19,27 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 
 var configuration = builder.Configuration;
 
+var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]);
+
 builder.Services
     .AddAuthentication(options =>
     {
-        options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-    .AddCookie(IdentityConstants.ApplicationScheme, options =>
+    .AddJwtBearer(options =>
     {
-        options.LoginPath = "/account/login";
-        options.LogoutPath = "/account/logout";
-    })
-    .AddBearerToken(IdentityConstants.BearerScheme);
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 
 builder.Services
@@ -68,6 +80,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

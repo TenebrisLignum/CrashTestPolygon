@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../core/services/alert.service';
-import { AuthResponseDto } from '../../core/interfaces/dto/auth/AuthResponseDto';
 import LocalStorageHelper from '../../core/helpers/localstorage.helper';
 import { Router } from '@angular/router';
 
@@ -21,7 +20,7 @@ export class LoginComponent {
         private _router: Router
     ) {
         this.loginForm = new FormGroup({
-            email: new FormControl("", [Validators.required]),
+            username: new FormControl("", [Validators.required]),
             password: new FormControl("", [Validators.required])
         });
     }
@@ -31,8 +30,12 @@ export class LoginComponent {
         if (this.loginForm.valid)
             this._authService.login(this.loginForm.value)
                 .subscribe({
-                    next: (res: AuthResponseDto) => {
-                        LocalStorageHelper.updateTokens(res);
+                    next: (res) => {
+                        debugger
+                        // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
+
+                        LocalStorageHelper.set('role', 'Administrator')
+                        LocalStorageHelper.setAccessToken(res.token);
                         this._alertService.showSucsess("Welcome!");
                         this._authService.sendAuthStateChangeNotification(true);
 
@@ -41,7 +44,9 @@ export class LoginComponent {
 
                     },
                     error: (error) => {
-                        this._alertService.showError(error.error.title);
+                        debugger
+
+                        // this._alertService.showError(error.error.title);
 
                         this.isRequestSent = false;
                     }

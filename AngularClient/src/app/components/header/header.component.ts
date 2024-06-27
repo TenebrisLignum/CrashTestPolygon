@@ -31,7 +31,8 @@ export class HeaderComponent {
     }
 
     logout() {
-        this._authService.logout();
+        this._authService.logout()
+        window.location.reload();
     }
 
     private _authSubscribe() {

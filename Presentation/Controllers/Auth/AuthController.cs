@@ -1,8 +1,10 @@
-﻿using Application.Logic.Auth.Commands.LoginUser;
-using Application.Logic.Auth.Commands.LogoutUser;
-using Application.Logic.Auth.Commands.RegisterUser;
+﻿using Application.Logic.Auth.Commands.RegisterUser;
+using Application.Logic.Auth.Queries.GetUser;
+using Application.Logic.Tokens.Commands.GenerateJWTToken;
+using Domain.Entities.Users;
+using Domain.Exceptions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Auth
@@ -12,10 +14,15 @@ namespace Presentation.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly ISender _sender;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(ISender sender)
+        public AuthController(
+            ISender sender,
+            UserManager<ApplicationUser> userManager
+        )
         {
             _sender = sender;
+            _userManager = userManager;
         }
 
         [HttpPost("/register")]
@@ -30,22 +37,19 @@ namespace Presentation.Controllers.Auth
         }
 
         [HttpPost("/login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+        public async Task<IActionResult> Login([FromBody] GetUserQuery command)
         {
-            var result = await _sender.Send(command);
+            var user = await _sender.Send(command);
 
-            if (!result.Succeeded)
-                return BadRequest(result);
+            if (user is null)
+                throw new BadRequestException("User does't exist!");
 
-            return Ok(result);
-        }
+            if (!await _userManager.CheckPasswordAsync(user, command.Password))
+                throw new BadRequestException("Wrong password!");
 
-        [HttpPost("/logout")]
-        [Authorize]
-        public async Task<IActionResult> Logout(LogoutUserCommand command)
-        {
-            await _sender.Send(command);
-            return Ok();
+            var token = await _sender.Send(new GenerateJWTTokenCommand(user));
+
+            return Ok(new { token });
         }
     }
 }

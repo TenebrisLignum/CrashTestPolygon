@@ -19,15 +19,7 @@ export class AuthService {
     ) { }
 
     login(authDto: AuthDto): Observable<any> {
-        // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
-
-        LocalStorageHelper.set('role', 'Administrator')
         return this._http.post(this.ApiUrl + '/login', authDto);
-    }
-
-    refresh(refreshToken: string): Observable<any> {
-        let body = { refreshToken: refreshToken }
-        return this._http.post(this.ApiUrl + '/refresh', body);
     }
 
     sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
@@ -35,14 +27,13 @@ export class AuthService {
     }
 
     logout = () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
         localStorage.removeItem('role');
+        localStorage.removeItem('token');
         this.sendAuthStateChangeNotification(false);
     }
 
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('access_token');
+		return !!localStorage.getItem('token');
     }
 
     // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
