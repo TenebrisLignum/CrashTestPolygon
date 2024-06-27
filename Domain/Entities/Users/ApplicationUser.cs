@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Users
 {
-    public class AppUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
     }
 }

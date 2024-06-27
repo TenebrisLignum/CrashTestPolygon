@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

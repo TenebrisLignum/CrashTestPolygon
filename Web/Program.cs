@@ -11,18 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                     .AddEnvironmentVariables();
+
+var configuration = builder.Configuration;
+
 builder.Services
-    .AddAuthentication()
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+        options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+    })
+    .AddCookie(IdentityConstants.ApplicationScheme, options =>
+    {
+        options.LoginPath = "/account/login";
+        options.LogoutPath = "/account/logout";
+    })
     .AddBearerToken(IdentityConstants.BearerScheme);
+
 
 builder.Services
     .AddAuthorizationBuilder();
 
 builder.Services
-    .AddIdentityCore<AppUser>()
+    .AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddApiEndpoints();
+    .AddSignInManager<SignInManager<ApplicationUser>>();
 
 builder.Services
     .AddData()
@@ -55,7 +70,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.MapIdentityApi<AppUser>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
