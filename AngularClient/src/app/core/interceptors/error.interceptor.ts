@@ -20,17 +20,22 @@ export class ErrorInterceptor implements HttpInterceptor {
                     case 400:
                         debugger
                         this._alertService.showError(error.error.detail);
-                        console.error('Bad Request - 400 error', error);
-                        errorMessage = 'Access forbidden. Please contact support if you believe this is an error.';
+                        console.error('Bad Request - 400 error.', error);
+                        errorMessage = 'Bad request. Something went wrong!';
+                        break;
+                    case 401:
+                        this._router.navigate(['/unauthorized']);
+                        console.error('Unauthorized - 401 error.', error);
+                        errorMessage = 'Unauthorized.';
                         break;
                     case 403:
                         this._router.navigate(['/forbidden']);
-                        console.error('Access forbidden - 403 error', error);
+                        console.error('Access forbidden - 403 error.', error);
                         errorMessage = 'Access forbidden. Please contact support if you believe this is an error.';
                         break;
                     case 404:
                         this._router.navigate(['/not-found']);
-                        console.error('Not found - 404 error', error);
+                        console.error('Not found - 404 error.', error);
                         errorMessage = 'Not found. Please contact support if you believe this is an error.';
                         break;
                     case 500:

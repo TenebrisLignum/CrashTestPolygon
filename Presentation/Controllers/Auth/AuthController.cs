@@ -31,20 +31,20 @@ namespace Presentation.Controllers.Auth
             var result = await _sender.Send(command);
 
             if (!result.Succeeded)
-                return BadRequest(result.Errors);
+                throw new BadRequestException(result.Errors.First().Description);
 
             return Ok(result);
         }
 
         [HttpPost("/login")]
-        public async Task<IActionResult> Login([FromBody] GetUserQuery command)
+        public async Task<IActionResult> Login([FromBody] GetUserQuery query)
         {
-            var user = await _sender.Send(command);
+            var user = await _sender.Send(query);
 
             if (user is null)
                 throw new BadRequestException("User does't exist!");
 
-            if (!await _userManager.CheckPasswordAsync(user, command.Password))
+            if (!await _userManager.CheckPasswordAsync(user, query.Password))
                 throw new BadRequestException("Wrong password!");
 
             var token = await _sender.Send(new GenerateJWTTokenCommand(user));
