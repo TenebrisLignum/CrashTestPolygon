@@ -8,11 +8,13 @@ namespace Presentation.Controllers.Chat
     [Authorize]
     public class ChatRoomController : ControllerBase
     {
+        [HttpGet]
         public IActionResult Get(string name)
         {
             return Ok();
         }
 
+        [HttpPost]
         public IActionResult Create()
         {
             return Ok();

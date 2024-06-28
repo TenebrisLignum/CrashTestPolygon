@@ -1,4 +1,4 @@
-﻿using Application.Logic.Articles.Commands.CreateArticle;
+﻿using Application.UseCases.Articles.Commands.CreateArticle;
 using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
 using FluentValidation;

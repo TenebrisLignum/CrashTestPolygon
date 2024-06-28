@@ -1,6 +1,6 @@
-﻿using Application.Logic.Auth.Commands.RegisterUser;
-using Application.Logic.Auth.Queries.GetUser;
-using Application.Logic.Tokens.Commands.GenerateJWTToken;
+﻿using Application.UseCases.Auth.Commands.RegisterUser;
+using Application.UseCases.Auth.Queries.GetUser;
+using Application.UseCases.Tokens.Commands.GenerateJWTToken;
 using Domain.Entities.Users;
 using Domain.Exceptions;
 using MediatR;

@@ -1,7 +1,7 @@
-﻿using Application.Logic.Articles.Commands.CreateArticle;
-using Application.Logic.Articles.Commands.DeleteArticle;
-using Application.Logic.Articles.Commands.UpdateArticle;
-using Application.Logic.Articles.Queries.GetArticleById;
+﻿using Application.UseCases.Articles.Commands.CreateArticle;
+using Application.UseCases.Articles.Commands.DeleteArticle;
+using Application.UseCases.Articles.Commands.UpdateArticle;
+using Application.UseCases.Articles.Queries.GetArticleById;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
