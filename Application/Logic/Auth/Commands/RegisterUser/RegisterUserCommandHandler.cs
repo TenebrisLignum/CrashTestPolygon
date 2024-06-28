@@ -31,10 +31,10 @@ namespace Application.Logic.Auth.Commands.RegisterUser
             _validator.ValidateAndThrow(request);
 
             if (await _userManager.FindByEmailAsync(request.Email) is not null)
-                throw new BadRequestException($"User with email {request.Email} already exist");
+                throw new BadRequestException($"User with email {request.Email} already exist.");
 
             if (await _userManager.FindByNameAsync(request.Username) is not null)
-                throw new BadRequestException($"User with username {request.Username} already exist");
+                throw new BadRequestException($"User with username {request.Username} already exist.");
 
             var user = new ApplicationUser { UserName = request.Username, Email = request.Email };
             var result = await _userManager.CreateAsync(user, request.Password);

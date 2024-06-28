@@ -13,7 +13,6 @@ export default class LocalStorageHelper {
         return this.get(ACCESS_TONKEN_KEY);
     }
 
-    // TODO: Move refresh token from the local storage
     static setAccessToken(token: string) {
         this.set(ACCESS_TONKEN_KEY, token);
     }

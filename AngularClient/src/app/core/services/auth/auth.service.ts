@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { AuthDto } from '../../interfaces/dto/auth/AuthDto';
 import { SignUpDto } from '../../interfaces/dto/auth/SignUpDto';
+import JWTHelper from '../../helpers/jwt.helper';
+import { ACCESS_TONKEN_KEY, ADMINISTRATOR_ROLE_STRING } from '../../../../consts';
 
 @Injectable({
     providedIn: 'root'
@@ -27,22 +29,20 @@ export class AuthService {
 
     }
 
+    logout = () => {
+        localStorage.removeItem(ACCESS_TONKEN_KEY);
+        this.sendAuthStateChangeNotification(false);
+    }
+
     sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
         this.authChangeSub.next(isAuthenticated);
     }
 
-    logout = () => {
-        localStorage.removeItem('role');
-        localStorage.removeItem('token');
-        this.sendAuthStateChangeNotification(false);
-    }
-
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('token');
+        return !!localStorage.getItem(ACCESS_TONKEN_KEY);
     }
 
-    // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
     isAdmin() {
-        return localStorage.getItem('role') == 'Administrator';
+        return JWTHelper.isUserInRole(ADMINISTRATOR_ROLE_STRING);
     }
 }
