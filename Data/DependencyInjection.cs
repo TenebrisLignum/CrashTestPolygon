@@ -1,5 +1,7 @@
 ﻿using Data.Repository;
+using Data.Repository.Chats;
 using Domain.Repositories.Articles;
+using Domain.Repositories.Chats;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +18,8 @@ namespace Data
             });
 
             services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IChatRoomsRepository, ChatRoomsRepository>();
+            services.AddScoped<IChatMessagesRepository, ChatMessagesRepository>();
 
             return services;
         }

@@ -1,6 +1,4 @@
-﻿using Data.Configurations;
-using Domain;
-using Domain.Entities.Abstract;
+﻿using Domain;
 using Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -46,7 +44,7 @@ namespace Data
                     Id = "a0d4ed01-4665-463e-9507-99bcc45b7672",
                     Name = Consts.UserRoleString,
                     NormalizedName = Consts.UserRoleStringNormalized
-                } 
+                }
             ]);
         }
     }
