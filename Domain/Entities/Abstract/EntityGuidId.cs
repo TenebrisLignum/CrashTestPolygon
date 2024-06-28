@@ -2,13 +2,13 @@
 {
     public abstract class EntityGuidId: Entity
     {
-        public virtual Guid Id { get; set; }
+        public virtual string Id { get; set; }
 
         protected EntityGuidId()
         {
         }
 
-        protected EntityGuidId(Guid id)
+        protected EntityGuidId(string id)
         {
             Id = id;
         }
