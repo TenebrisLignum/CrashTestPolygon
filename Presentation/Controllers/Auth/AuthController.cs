@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Auth
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly ISender _sender;
