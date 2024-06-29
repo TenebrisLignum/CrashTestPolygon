@@ -1,9 +1,9 @@
-﻿using Application.Messaging;
+﻿using Application.Mapping.Chats;
+using Application.Messaging;
 using Domain.Entities.Chats;
 using Domain.Exceptions;
 using Domain.Repositories.Chats;
 using FluentValidation;
-using Mapster;
 
 namespace Application.UseCases.ChatRooms.Commands.CreateChatRoom
 {
@@ -31,30 +31,17 @@ namespace Application.UseCases.ChatRooms.Commands.CreateChatRoom
             if (await _chatRoomRepository.IsExist(request.Name))
                 throw new BadRequestException($"Chat with the name {request.Name} is already exist.");
 
-            var chatRoom = request.Adapt<ChatRoom>();
-
-            await InsertChatRoom(chatRoom);
-            await AddOwnerToChatRoomUsers(chatRoom);
-
-            return chatRoom.Id;
-        }
-
-        private async Task InsertChatRoom(ChatRoom chatRoom)
-        {
-            chatRoom.Id = Guid.NewGuid().ToString();
-            chatRoom.CreatedDate = DateTime.UtcNow;
-
+            var chatRoom = ChatRoomMapper.MapToChatRoom(request);
             await _chatRoomRepository.Insert(chatRoom);
-        }
 
-        private async Task AddOwnerToChatRoomUsers(ChatRoom chatRoom)
-        {
             var userChatRoom = new ApplicationUserChatRoom
             {
                 ChatRoomId = chatRoom.Id,
                 ApplicationUserId = chatRoom.OwnerId
             };
             await _chatUserRepository.Insert(userChatRoom);
+
+            return chatRoom.Id;
         }
     }
 }
