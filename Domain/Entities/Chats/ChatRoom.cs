@@ -13,5 +13,6 @@ namespace Domain.Entities.Chats
 
         public ApplicationUser Owner { get; set; }
         public ICollection<ChatMessage> ChatMessages { get; set; }
+        public ICollection<ApplicationUserChatRoom> UserChatRooms { get; set; }
     }
 }
