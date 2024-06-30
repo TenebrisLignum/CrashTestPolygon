@@ -3,10 +3,11 @@ using Application.Messaging;
 using Domain.Entities.Chats;
 using Domain.Exceptions;
 using Domain.Repositories.Chats;
+using Mapster;
 
 namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
 {
-    public class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand, string>
+    public sealed class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand, ChatRoomViewModel>
     {
         private readonly IChatRoomsRepository _chatRoomRepository;
         private readonly IApplicationUserChatRoomRepository _chatUserRepository;
@@ -20,12 +21,18 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
             _chatUserRepository = chatUserRepository;
         }
 
-        public async Task<string> Handle(JoinChatRoomCommand request, CancellationToken cancellationToken)
+        public async Task<ChatRoomViewModel> Handle(JoinChatRoomCommand request, CancellationToken cancellationToken)
         {
             var chatRoom = await _chatRoomRepository.GetByName(request.ChatRoomName) 
                 ?? throw new BadRequestException($"Chat with the name {request.ChatRoomName} does not exist.");
 
-            if (chatRoom.IsPrivate )
+            var newChatUser = new ApplicationUserChatRoom()
+            {
+                ApplicationUserId = request.UserId,
+                ChatRoomId = chatRoom.Id
+            };
+
+            if (!await _chatUserRepository.IsExist(newChatUser) && chatRoom.IsPrivate)
             {
                 if (string.IsNullOrWhiteSpace(request.Password))
                     throw new BadRequestException("Please, enter password!");
@@ -34,19 +41,13 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
 
                 if (chatRoom.Password != password)
                     throw new BadRequestException("Invalid password!");
+
+                await _chatUserRepository.Insert(newChatUser);
             }
 
-            var newChatUser = new ApplicationUserChatRoom()
-            {
-                ApplicationUserId = request.UserId,
-                ChatRoomId = chatRoom.Id
-            };
+            var chatRoomVM = chatRoom.Adapt<ChatRoomViewModel>();
 
-            if (await _chatUserRepository.IsExist(newChatUser))
-                throw new BadRequestException("You are already in this chat.");
-
-            await _chatUserRepository.Insert(newChatUser);
-            return chatRoom.Id;
+            return chatRoomVM;
         }
     }
 }

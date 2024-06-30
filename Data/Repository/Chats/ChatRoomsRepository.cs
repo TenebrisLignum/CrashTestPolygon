@@ -25,6 +25,19 @@ namespace Data.Repository.Chats
                 .FirstOrDefaultAsync(a => a.Name.Equals(name));
         }
 
+        public async Task<ChatRoom?> EnterChatRoom(string id, CancellationToken cancellationToken)
+        {
+            // TODO: IN FUTURE WE'LL NEED PAGINATION FOR CHAT MESSAGES
+            return await _context
+                .Set<ChatRoom>()
+                .AsNoTracking()
+                .Include(cr => 
+                    cr.ChatMessages
+                        .OrderByDescending(cm => cm.CreatedDate)
+                )
+                .FirstOrDefaultAsync(cr => cr.Id == id, cancellationToken);
+        }
+
         public async Task Insert(ChatRoom chatRoom)
         {
             await _context

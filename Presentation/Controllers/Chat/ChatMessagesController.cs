@@ -8,8 +8,8 @@ namespace Presentation.Controllers.Chat
     [Authorize]
     public class ChatMessages : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Create()
+        [HttpPost("/send")]
+        public async Task<IActionResult> Send()
         {
             return Ok();
         }

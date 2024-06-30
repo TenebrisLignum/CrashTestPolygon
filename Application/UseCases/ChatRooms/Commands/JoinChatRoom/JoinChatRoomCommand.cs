@@ -9,5 +9,5 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
         string UserId,
         string? Password
     )
-    : ICommand<string>;
+    : ICommand<ChatRoomViewModel>;
 }
