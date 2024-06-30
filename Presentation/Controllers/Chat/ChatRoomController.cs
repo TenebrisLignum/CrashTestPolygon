@@ -1,11 +1,14 @@
 ﻿using Application.UseCases.ChatRooms.Commands.CreateChatRoom;
+using Application.UseCases.ChatRooms.Commands.JoinChatRoom;
 using Domain.Entities.Users;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Models.DTO.Chats;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Presentation.Controllers.Chat
 {
@@ -27,18 +30,32 @@ namespace Presentation.Controllers.Chat
         }
 
         [HttpGet]
-        public IActionResult Get(string name)
+        public async Task<IActionResult> Get()
         {
             return Ok();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateChatRoomCommand command)
+        [HttpPost("join")]
+        public async Task<IActionResult> Join(JoinChatRoomRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value) ?? throw new BadRequestException("User not found!");
-            var newCommand = command with { OwnerId = user.Id };
+            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value) 
+                ?? throw new BadRequestException("User not found!");
 
-            var result = await _sender.Send(newCommand);
+            var command = new JoinChatRoomCommand(request.ChatRoomName, user.Id, request.Password);
+
+            var result = await _sender.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateChatRoomRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value) 
+                ?? throw new BadRequestException("User not found!");
+
+            var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, user.Id);
+
+            var result = await _sender.Send(command);
             return Ok(result);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Chats;
 using Domain.Repositories.Chats;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Chats
 {
@@ -10,6 +11,17 @@ namespace Data.Repository.Chats
         public ApplicationUserChatRoomRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<bool> IsExist(ApplicationUserChatRoom entity)
+        {
+            return await _context
+                .Set<ApplicationUserChatRoom>()
+                .AsNoTracking()
+                .AnyAsync(e => 
+                    e.ApplicationUserId == entity.ApplicationUserId
+                    && e.ChatRoomId == entity.ChatRoomId
+                );
         }
 
         public async Task Insert(ApplicationUserChatRoom entity)
