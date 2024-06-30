@@ -13,6 +13,17 @@ namespace Data.Repository.Chats
             _context = context;
         }
 
+        public async Task<bool> IsExistByFields(string userId, string chatRoomId)
+        {
+            return await _context
+                .Set<ApplicationUserChatRoom>()
+                .AsNoTracking()
+                .AnyAsync(e =>
+                    e.ApplicationUserId == userId
+                    && e.ChatRoomId == chatRoomId
+                );
+        }
+
         public async Task<bool> IsExist(ApplicationUserChatRoom entity)
         {
             return await _context

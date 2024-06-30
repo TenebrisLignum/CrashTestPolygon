@@ -28,7 +28,7 @@ namespace Application.UseCases.ChatRooms.Commands.CreateChatRoom
         {
             _validator.ValidateAndThrow(request);
 
-            if (await _chatRoomRepository.IsExist(request.Name))
+            if (await _chatRoomRepository.IsExistByName(request.Name))
                 throw new BadRequestException($"Chat with the name {request.Name} is already exist.");
 
             var chatRoom = ChatRoomMapper.MapToChatRoom(request);

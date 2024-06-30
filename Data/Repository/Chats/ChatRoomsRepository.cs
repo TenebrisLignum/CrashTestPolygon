@@ -9,7 +9,15 @@ namespace Data.Repository.Chats
         private readonly ApplicationDbContext _context;
         public ChatRoomsRepository(ApplicationDbContext context) => _context = context;
 
-        public async Task<bool> IsExist(string name)
+        public async Task<bool> IsExistById(string id)
+        {
+            return await _context
+                .Set<ChatRoom>()
+                .AsNoTracking()
+                .AnyAsync(a => a.Id.Equals(id));
+        }
+
+        public async Task<bool> IsExistByName(string name)
         {
             return await _context
                 .Set<ChatRoom>()
