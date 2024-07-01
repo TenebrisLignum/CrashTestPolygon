@@ -1,10 +1,8 @@
 ﻿using Application.Mapping.Chats;
 using Application.Messaging;
-using Domain.Entities.Chats;
 using Domain.Exceptions;
 using Domain.Repositories.Chats;
 using FluentValidation;
-using Mapster;
 
 namespace Application.UseCases.ChatMessages.Commands.SendChatMessage
 {
@@ -12,14 +10,14 @@ namespace Application.UseCases.ChatMessages.Commands.SendChatMessage
     {
         private readonly IChatMessagesRepository _chatMessagesRepository;
         private readonly IChatRoomsRepository _chatRoomRepository;
-        private readonly IApplicationUserChatRoomRepository _chatUserRepository;
+        private readonly IChatRoomApplicationUserRepository _chatUserRepository;
         private readonly IValidator<SendChatMessageCommand> _validator;
 
         public SendChatMessageCommandHandler(
             IChatMessagesRepository chatMessagesRepository,
             IChatRoomsRepository chatRoomRepository,
-            IApplicationUserChatRoomRepository chatUserRepository,
-            IValidator<SendChatMessageCommand> validator 
+            IChatRoomApplicationUserRepository chatUserRepository,
+            IValidator<SendChatMessageCommand> validator
         )
         {
             _chatMessagesRepository = chatMessagesRepository;

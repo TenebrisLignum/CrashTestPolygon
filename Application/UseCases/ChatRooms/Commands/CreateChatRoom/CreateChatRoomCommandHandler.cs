@@ -10,12 +10,12 @@ namespace Application.UseCases.ChatRooms.Commands.CreateChatRoom
     public sealed class CreateChatRoomCommandHandler : ICommandHandler<CreateChatRoomCommand, string>
     {
         private readonly IChatRoomsRepository _chatRoomRepository;
-        private readonly IApplicationUserChatRoomRepository _chatUserRepository;
+        private readonly IChatRoomApplicationUserRepository _chatUserRepository;
         private readonly IValidator<CreateChatRoomCommand> _validator;
 
         public CreateChatRoomCommandHandler(
             IChatRoomsRepository chatRoomsRepository,
-            IApplicationUserChatRoomRepository chatUserRepository,
+            IChatRoomApplicationUserRepository chatUserRepository,
             IValidator<CreateChatRoomCommand> validator
         )
         {

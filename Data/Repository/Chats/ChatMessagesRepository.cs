@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Chats;
 using Domain.Repositories.Chats;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Chats
 {
@@ -7,6 +8,14 @@ namespace Data.Repository.Chats
     {
         private readonly ApplicationDbContext _context;
         public ChatMessagesRepository(ApplicationDbContext context) => _context = context;
+
+        public IQueryable<ChatMessage> GetAsQueryable()
+        {
+            return _context
+                .Set<ChatMessage>()
+                .AsNoTracking()
+                .AsQueryable();
+        }
 
         public async Task Insert(ChatMessage message)
         {

@@ -10,11 +10,11 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
     public sealed class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand, ChatRoomViewModel>
     {
         private readonly IChatRoomsRepository _chatRoomRepository;
-        private readonly IApplicationUserChatRoomRepository _chatUserRepository;
+        private readonly IChatRoomApplicationUserRepository _chatUserRepository;
 
         public JoinChatRoomCommandHandler(
             IChatRoomsRepository chatRoomsRepository,
-            IApplicationUserChatRoomRepository chatUserRepository
+            IChatRoomApplicationUserRepository chatUserRepository
         )
         {
             _chatRoomRepository = chatRoomsRepository;

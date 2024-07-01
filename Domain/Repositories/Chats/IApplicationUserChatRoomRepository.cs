@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories.Chats
 {
-    public interface IApplicationUserChatRoomRepository
+    public interface IChatRoomApplicationUserRepository
     {
         Task<bool> IsExistByFields(string userId, string chatRoomId);
         Task<bool> IsExist(ApplicationUserChatRoom entity);

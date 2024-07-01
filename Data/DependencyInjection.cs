@@ -20,7 +20,7 @@ namespace Data
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IChatRoomsRepository, ChatRoomsRepository>();
             services.AddScoped<IChatMessagesRepository, ChatMessagesRepository>();
-            services.AddScoped<IApplicationUserChatRoomRepository, ApplicationUserChatRoomRepository>();
+            services.AddScoped<IChatRoomApplicationUserRepository, ChatRoomApplicationUserRepository>();
 
             return services;
         }

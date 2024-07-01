@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Chats
 {
-    internal class ApplicationUserChatRoomRepository : IApplicationUserChatRoomRepository
+    internal class ChatRoomApplicationUserRepository : IChatRoomApplicationUserRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicationUserChatRoomRepository(ApplicationDbContext context)
+        public ChatRoomApplicationUserRepository(ApplicationDbContext context)
         {
             _context = context;
         }
