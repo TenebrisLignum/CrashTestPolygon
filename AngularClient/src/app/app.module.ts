@@ -17,6 +17,8 @@ import { FeaturesComponent } from './components/features/features.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import LocalStorageHelper from './core/helpers/localstorage.helper';
 import { SignupComponent } from './components/sign-up/sign-up.component';
+import { ChatsComponent } from './components/chats/chats.component';
+import { ChatsModule } from './components/chats/chats.module';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import { SignupComponent } from './components/sign-up/sign-up.component';
         LandingModule,
         BrowserModule,
         BlogsModule,
+        ChatsModule,
+
         HttpClientModule,
         AppRoutingModule,
         FontAwesomeModule,

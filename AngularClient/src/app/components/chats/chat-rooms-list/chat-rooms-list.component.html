@@ -1,0 +1,10 @@
+<div class="row">
+    <h1 class="title"> Chat Rooms </h1>
+</div>
+
+<div class="chats-list">
+    <div *ngFor="let chat of chats" class="chats-list__item">
+        <p>{{chat.name}}</p>
+        <span>Users: {{chat.usersCount}}</span>
+    </div>
+</div>
