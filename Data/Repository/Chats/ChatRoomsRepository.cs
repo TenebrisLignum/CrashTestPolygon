@@ -33,17 +33,15 @@ namespace Data.Repository.Chats
                 .FirstOrDefaultAsync(a => a.Name.Equals(name));
         }
 
-        public async Task<ChatRoom?> EnterChatRoom(string id, CancellationToken cancellationToken)
+        public async Task<List<ChatRoom>> GetChatRoomsContainsUser(string userId, CancellationToken cancellationToken)
         {
-            // TODO: IN FUTURE WE'LL NEED PAGINATION FOR CHAT MESSAGES
             return await _context
                 .Set<ChatRoom>()
-                .AsNoTracking()
-                .Include(cr => 
-                    cr.ChatMessages
-                        .OrderByDescending(cm => cm.CreatedDate)
+                .Include(cr => cr.UserChatRooms)
+                .Where(cr => cr.UserChatRooms
+                    .Any(u => u.ApplicationUserId == userId)
                 )
-                .FirstOrDefaultAsync(cr => cr.Id == id, cancellationToken);
+                .ToListAsync(cancellationToken);
         }
 
         public async Task Insert(ChatRoom chatRoom)

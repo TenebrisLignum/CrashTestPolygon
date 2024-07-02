@@ -7,7 +7,7 @@ namespace Domain.Repositories.Chats
         Task<bool> IsExistById(string id);
         Task<bool> IsExistByName(string name);
         Task<ChatRoom?> GetByName(string name);
-        Task<ChatRoom?> EnterChatRoom(string id, CancellationToken cancellationToken);
+        Task<List<ChatRoom>> GetChatRoomsContainsUser(string userId, CancellationToken cancellationToken);
         Task Insert(ChatRoom chatRoom);
     }
 }
