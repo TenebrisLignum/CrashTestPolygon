@@ -1,24 +1,26 @@
-﻿using Application.UseCases.ChatRooms.Commands.CreateChatRoom;
-using Application.UseCases.ChatRooms.Commands.JoinChatRoom;
+﻿using Application.UseCases.ChatMessages.Commands.SendChatMessage;
+using Application.UseCases.ChatMessages.Queries.LoadChatMessages;
 using Domain.Entities.Users;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models.DTO.Chats;
 using System.Security.Claims;
 
-namespace Presentation.Controllers.Chat
+namespace Presentation.Controllers.Chats
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
-    public class ChatRoomController : ControllerBase
+    [Authorize]
+    public class ChatMessagesController : ControllerBase
     {
         private readonly ISender _sender;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ChatRoomController(
+        public ChatMessagesController
+        (
             ISender sender,
             UserManager<ApplicationUser> userManager
         )
@@ -27,27 +29,27 @@ namespace Presentation.Controllers.Chat
             _userManager = userManager;
         }
 
-        [HttpPost("join")]
-        public async Task<IActionResult> Join(JoinChatRoomRequest request)
+        [HttpGet("load")]
+        public async Task<IActionResult> Load([FromQuery] LoadChatMessagesRequest request)
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
-            var command = new JoinChatRoomCommand(request.ChatRoomName, user.Id, request.Password);
+            var query = new LoadChatMessagesQuery(request.ChatRoomId, user.Id, request.Page);
+            var result = await _sender.Send(query);
 
-            var result = await _sender.Send(command);
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateChatRoomRequest request)
+        [HttpPost("send")]
+        public async Task<IActionResult> Send(SendChatMessageRequest request)
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
-            var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, user.Id);
-
+            var command = new SendChatMessageCommand(request.Text, request.ChatRoomId, user.Id);
             var result = await _sender.Send(command);
+
             return Ok(result);
         }
     }
