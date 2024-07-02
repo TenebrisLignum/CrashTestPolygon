@@ -31,9 +31,6 @@ export class LoginComponent {
             this._authService.login(this.loginForm.value)
                 .subscribe({
                     next: (res) => {
-                        // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
-
-                        LocalStorageHelper.set('role', 'Administrator')
                         LocalStorageHelper.setAccessToken(res.token);
                         this._alertService.showSucsess("Welcome!");
                         this._authService.sendAuthStateChangeNotification(true);
@@ -43,9 +40,6 @@ export class LoginComponent {
 
                     },
                     error: (error) => {
-
-                        // this._alertService.showError(error.error.title);
-
                         this.isRequestSent = false;
                     }
                 });
