@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.UseCases.ChatRooms.Commands.CreateChatRoom;
+using Application.UseCases.ChatRooms.Queries.GetChatRoomsByUserId;
 using Domain.Entities.Chats;
 using Mapster;
 
@@ -19,6 +20,15 @@ namespace Application.Mapping.Chats
                 .Map(dest => dest.CreatedDate, src => DateTime.UtcNow);
 
             return request.Adapt<ChatRoom>(config);
+        }
+
+        public static List<ChatRoomItemViewModel> MapChatRoomsToItemViewModels(List<ChatRoom> chatRooms)
+        {
+            var config = new TypeAdapterConfig();
+            config.NewConfig<ChatRoom, ChatRoomItemViewModel>()
+                .Map(dest => dest.UsersCount, src => src.UserChatRooms.Count);
+
+            return chatRooms.Adapt<List<ChatRoomItemViewModel>>(config);
         }
     }
 }
