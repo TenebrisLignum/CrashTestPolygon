@@ -31,7 +31,6 @@ export class LoginComponent {
             this._authService.login(this.loginForm.value)
                 .subscribe({
                     next: (res) => {
-                        debugger
                         // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
 
                         LocalStorageHelper.set('role', 'Administrator')
@@ -44,7 +43,6 @@ export class LoginComponent {
 
                     },
                     error: (error) => {
-                        debugger
 
                         // this._alertService.showError(error.error.title);
 

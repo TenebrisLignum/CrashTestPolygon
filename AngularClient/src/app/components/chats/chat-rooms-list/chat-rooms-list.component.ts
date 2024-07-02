@@ -22,7 +22,6 @@ export class ChatRoomsListComponent {
     private _loadMyChats() {
         this._chatRoomsService.list().subscribe({
             next: (res: ChatRoomItemViewModel[]) => {
-                debugger
                 this.chats = res;
             },
             error: (err) => {

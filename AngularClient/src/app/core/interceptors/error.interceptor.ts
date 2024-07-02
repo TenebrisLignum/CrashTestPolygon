@@ -18,7 +18,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                 let errorMessage: string;
                 switch (error.status) {
                     case 400:
-                        debugger
                         this._alertService.showError(error.error.detail);
                         console.error('Bad Request - 400 error.', error);
                         errorMessage = 'Bad request. Something went wrong!';
