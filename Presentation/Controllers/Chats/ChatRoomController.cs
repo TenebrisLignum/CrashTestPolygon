@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.ChatRooms.Commands.CreateChatRoom;
 using Application.UseCases.ChatRooms.Commands.JoinChatRoom;
+using Application.UseCases.ChatRooms.Queries.GetChatRoomDetails;
 using Application.UseCases.ChatRooms.Queries.GetChatRoomsByUserId;
 using Domain.Entities.Users;
 using Domain.Exceptions;
@@ -27,6 +28,13 @@ namespace Presentation.Controllers.Chats
         {
             _sender = sender;
             _userManager = userManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetChatRoomDetailsQuery query)
+        {
+            var result = await _sender.Send(query);
+            return Ok(result);
         }
 
         [HttpGet("my-chats")]

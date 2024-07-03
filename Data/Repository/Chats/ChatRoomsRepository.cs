@@ -33,6 +33,14 @@ namespace Data.Repository.Chats
                 .FirstOrDefaultAsync(a => a.Name.Equals(name));
         }
 
+        public async Task<ChatRoom?> GetById(string id, CancellationToken cancellationToken)
+        {
+            return await _context
+                .Set<ChatRoom>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);
+        }
+
         public async Task<List<ChatRoom>> GetChatRoomsContainsUser(string userId, CancellationToken cancellationToken)
         {
             return await _context
