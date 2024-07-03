@@ -34,9 +34,12 @@ namespace Application.UseCases.ChatMessages.Queries.LoadChatMessages
             if (!await _chatUserRepository.IsExistByFields(request.UserId, request.ChatRoomId))
                 throw new BadRequestException("You are not in this chat!");
 
-            var query = _chatMessagesRepository.GetAsQueryable().Include(cm => cm.Sender);
-            var messages = await PagedList<ChatMessage>.CreateAsync(query, request.Page, 20);
+            var query = _chatMessagesRepository
+                .GetAsQueryable()
+                .Where(cm => cm.ChatRoomId == request.ChatRoomId)
+                .Include(cm => cm.Sender);
 
+            var messages = await PagedList<ChatMessage>.CreateAsync(query, request.Page, 20);
             var messagesVMs = ChatMessageMapper.MapChatMessagesToChatMessageViewModels(messages.Items);
 
             var result = new ChatMessagesViewModel
