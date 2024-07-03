@@ -23,3 +23,17 @@
 
     cursor: pointer;
 }
+
+.chats-actions {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    justify-content: space-around;
+
+    .chats-actions__block {
+        width: 500px;
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 20px;
+    }
+}

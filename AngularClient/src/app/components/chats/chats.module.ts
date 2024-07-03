@@ -4,6 +4,7 @@ import { ChatsComponent } from './chats.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { ChatsRoutingModule } from './chats-routing.module';
 import { ChatRoomsListComponent } from './chat-rooms-list/chat-rooms-list.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ChatRoomsListComponent } from './chat-rooms-list/chat-rooms-list.compon
         ChatRoomsListComponent
     ],
     imports: [
+        BrowserModule,
         CommonModule,
         ChatsRoutingModule
     ]

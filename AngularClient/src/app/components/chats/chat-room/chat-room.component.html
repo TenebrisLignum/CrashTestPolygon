@@ -1,1 +1,7 @@
 <p>chat-room works!</p>
+
+<div *ngFor="let m of chatMessagesViewModel.messages">
+    <p>
+        <b>{{m.ownerName}}:</b> <span>{{m.text}}</span>
+    </p>
+</div>
