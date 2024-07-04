@@ -37,7 +37,8 @@ namespace Application.UseCases.ChatMessages.Queries.LoadChatMessages
             var query = _chatMessagesRepository
                 .GetAsQueryable()
                 .Where(cm => cm.ChatRoomId == request.ChatRoomId)
-                .Include(cm => cm.Sender);
+                .Include(cm => cm.Sender)
+                .OrderByDescending(cm => cm.CreatedDate);
 
             var messages = await PagedList<ChatMessage>.CreateAsync(query, request.Page, 20);
             var messagesVMs = ChatMessageMapper.MapChatMessagesToChatMessageViewModels(messages.Items);

@@ -4,7 +4,8 @@ namespace Application.UseCases.ChatRooms.Queries.GetChatRoomDetails
 {
     public record GetChatRoomDetailsQuery
     (
-        string Id
+        string Id,
+        string UserId
     )
     : IQuery<ChatRoomDetailsViewModel>;
 }
