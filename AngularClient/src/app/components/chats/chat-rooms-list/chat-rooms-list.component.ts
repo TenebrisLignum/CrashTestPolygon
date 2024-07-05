@@ -22,17 +22,8 @@ export class ChatRoomsListComponent {
         this._loadMyChats();
     }
 
-    enter(name: string) {
-        let request = { chatRoomName: name, password: null } as JoinChatRoomRequest;
-
-        this._chatRoomsService.join(request).subscribe({
-            next: (res) => {
-                this._router.navigate(['chats/' + res.id]);
-            },
-            error: (err) => {
-                alert("Okay, thats wrong!");
-            }
-        });
+    enter(id: string) {
+        this._router.navigate(['chats/' + id]);
     }
 
     private _loadMyChats() {

@@ -31,8 +31,12 @@ namespace Presentation.Controllers.Chats
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetChatRoomDetailsQuery query)
+        public async Task<IActionResult> Get([FromQuery] string id)
         {
+            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                ?? throw new BadRequestException("User not found!");
+
+            var query = new GetChatRoomDetailsQuery(id, user.Id);
             var result = await _sender.Send(query);
             return Ok(result);
         }

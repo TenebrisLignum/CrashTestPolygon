@@ -15,7 +15,7 @@
 </div>
 
 <div class="chats-list">
-    <div *ngFor="let chat of chats" class="chats-list__item" (click)="enter(chat.name)">
+    <div *ngFor="let chat of chats" class="chats-list__item" (click)="enter(chat.id)">
         <p>{{chat.name}}</p>
         <span>Users: {{chat.usersCount}}</span>
     </div>

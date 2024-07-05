@@ -35,8 +35,7 @@ namespace Application.UseCases.ChatRooms.Queries.GetChatRoomDetails
                     Name = cr.Name,
                     UsersCount = cr.UserChatRooms.Count
                 })
-                .FirstOrDefaultAsync(cancellationToken) 
-                ?? throw new BadRequestException("Chat does not exist.");
+                .FirstOrDefaultAsync(cancellationToken);
 
             return chat;
         }
