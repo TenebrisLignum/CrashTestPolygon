@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LoadChatMessagesRequest } from '../../interfaces/dto/chats/LoadChatMessagesRequest';
+import { SendChatMessageRequest } from '../../interfaces/dto/chats/SendChatMessageRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +22,9 @@ export class ChatMessagesService {
         params = params.set('page', request.page ?? 1);
 
         return this._http.get(this.ApiUrl + '/load', { params: params });
+    }
+
+    send(request: SendChatMessageRequest): Observable<any> {
+        return this._http.post(this.ApiUrl + '/send', request);
     }
 }
