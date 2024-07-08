@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatRoomsService } from '../../../core/services/chats/chat-rooms.service';
 import { ChatRoomItemViewModel } from '../../../core/interfaces/view-models/chats/ChatRoomItemViewModel';
-import { JoinChatRoomRequest } from '../../../core/interfaces/dto/chats/JoinChatRoomRequest';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +9,8 @@ import { Router } from '@angular/router';
     styleUrl: './chat-rooms-list.component.scss'
 })
 export class ChatRoomsListComponent {
+
+    isLoaded: boolean = false;
 
     chats: ChatRoomItemViewModel[] = [];
 
@@ -30,9 +31,10 @@ export class ChatRoomsListComponent {
         this._chatRoomsService.list().subscribe({
             next: (res: ChatRoomItemViewModel[]) => {
                 this.chats = res;
+                this.isLoaded = true;
             },
             error: (err) => {
-
+                this.isLoaded = true;
             }
         })
     }

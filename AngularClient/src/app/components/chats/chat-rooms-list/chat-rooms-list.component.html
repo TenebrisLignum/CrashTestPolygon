@@ -2,7 +2,7 @@
     <h1 class="title"> Chat Rooms </h1>
 </div>
 
-<div class="chats-actions">
+<div *ngIf="isLoaded" class="chats-actions">
     <div class="chats-actions__block">
         <button class="custom-button">
             Create chat
@@ -14,9 +14,11 @@
     </div>
 </div>
 
-<div class="chats-list">
+<div *ngIf="isLoaded" class="chats-list">
     <div *ngFor="let chat of chats" class="chats-list__item" (click)="enter(chat.id)">
         <p>{{chat.name}}</p>
         <span>Users: {{chat.usersCount}}</span>
     </div>
 </div>
+
+<app-large-spinner class="spinner" *ngIf="!isLoaded"></app-large-spinner>
