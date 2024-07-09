@@ -7,7 +7,7 @@ using Mapster;
 
 namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
 {
-    public sealed class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand, ChatRoomViewModel>
+    public sealed class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand, string>
     {
         private readonly IChatRoomsRepository _chatRoomRepository;
         private readonly IChatRoomApplicationUserRepository _chatUserRepository;
@@ -21,7 +21,7 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
             _chatUserRepository = chatUserRepository;
         }
 
-        public async Task<ChatRoomViewModel> Handle(JoinChatRoomCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(JoinChatRoomCommand request, CancellationToken cancellationToken)
         {
             var chatRoom = await _chatRoomRepository.GetByName(request.ChatRoomName) 
                 ?? throw new BadRequestException($"Chat with the name {request.ChatRoomName} does not exist.");
@@ -45,9 +45,7 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
                 await _chatUserRepository.Insert(newChatUser);
             }
 
-            var chatRoomVM = chatRoom.Adapt<ChatRoomViewModel>();
-
-            return chatRoomVM;
+            return chatRoom.Id;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Presentation.Controllers.Chats
             var command = new JoinChatRoomCommand(request.ChatRoomName, user.Id, request.Password);
 
             var result = await _sender.Send(command);
-            return Ok(result);
+            return Ok(new { chatRoomId = result });
         }
 
         [HttpPost]
