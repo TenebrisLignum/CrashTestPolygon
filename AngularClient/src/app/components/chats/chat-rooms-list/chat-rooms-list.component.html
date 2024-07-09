@@ -8,7 +8,7 @@
             Create chat
         </button>
 
-        <button class="custom-button">
+        <button class="custom-button" (click)="onJoin()">
             Join chat
         </button>
     </div>
@@ -22,3 +22,7 @@
 </div>
 
 <app-large-spinner class="spinner" *ngIf="!isLoaded"></app-large-spinner>
+
+<dialog #joinDialog>
+    <app-join-chat-modal (dataChanged)="join($event)" (onCancel)="closeJoinModal()"></app-join-chat-modal>
+</dialog>

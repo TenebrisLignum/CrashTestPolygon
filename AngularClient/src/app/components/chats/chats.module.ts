@@ -6,15 +6,17 @@ import { ChatsRoutingModule } from './chats-routing.module';
 import { ChatRoomsListComponent } from './chat-rooms-list/chat-rooms-list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LargeSpinnerComponent } from '../../core/shared/large-spinner/large-spinner.component';
+import { JoinChatModalComponent } from './join-chat-modal/join-chat-modal.component';
 
 
 @NgModule({
     declarations: [
         ChatsComponent,
         ChatRoomComponent,
-        ChatRoomsListComponent
+        ChatRoomsListComponent,
+        JoinChatModalComponent
     ],
     imports: [
         BrowserModule,
@@ -22,6 +24,7 @@ import { LargeSpinnerComponent } from '../../core/shared/large-spinner/large-spi
         ChatsRoutingModule,
         FontAwesomeModule,
         FormsModule,
+        ReactiveFormsModule,
         LargeSpinnerComponent
     ]
 })
