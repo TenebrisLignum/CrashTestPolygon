@@ -19,10 +19,6 @@ export class JoinChatModalComponent {
         });
     }
 
-    ngOnInit() {
-
-    }
-
     submit() {
         if (!this.form.invalid)
             this.dataChanged.emit(this.form.value);
