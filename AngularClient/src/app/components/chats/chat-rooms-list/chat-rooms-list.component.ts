@@ -3,6 +3,7 @@ import { ChatRoomsService } from '../../../core/services/chats/chat-rooms.servic
 import { ChatRoomItemViewModel } from '../../../core/interfaces/view-models/chats/ChatRoomItemViewModel';
 import { Router } from '@angular/router';
 import { JoinChatRoomRequest } from '../../../core/interfaces/dto/chats/JoinChatRoomRequest';
+import { CreateChatRoomRequest } from '../../../core/interfaces/dto/chats/CreateChatRoomRequest';
 
 @Component({
     selector: 'app-chat-rooms-list',
@@ -10,7 +11,8 @@ import { JoinChatRoomRequest } from '../../../core/interfaces/dto/chats/JoinChat
     styleUrl: './chat-rooms-list.component.scss'
 })
 export class ChatRoomsListComponent {
-    @ViewChild('joinDialog') dialog: any;
+    @ViewChild('joinDialog') joinDialog: any;
+    @ViewChild('createDialog') createDialog: any;
 
     isLoaded: boolean = false;
 
@@ -30,7 +32,7 @@ export class ChatRoomsListComponent {
     }
 
     onJoin() {
-        this.dialog.nativeElement.showModal();
+        this.joinDialog.nativeElement.showModal();
     }
 
     join($event: any) {
@@ -41,11 +43,30 @@ export class ChatRoomsListComponent {
             error: (err) => {
 
             }
-        })
+        });
     }
 
     closeJoinModal() {
-        this.dialog.nativeElement.close();
+        this.joinDialog.nativeElement.close();
+    }
+
+    onCreate() {
+        this.createDialog.nativeElement.showModal();
+    }
+
+    create($event: any) {
+        this._chatRoomsService.create($event as CreateChatRoomRequest).subscribe({
+            next: (res) => {
+                this._redirectToChatRoom(res.chatRoomId);
+            },
+            error: (err) => {
+
+            }
+        });
+    }
+
+    closeCreateModal() {
+        this.createDialog.nativeElement.close();
     }
 
     private _loadMyChats() {

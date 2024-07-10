@@ -4,7 +4,7 @@
 
 <div *ngIf="isLoaded" class="chats-actions">
     <div class="chats-actions__block">
-        <button class="custom-button">
+        <button class="custom-button" (click)="onCreate()">
             Create chat
         </button>
 
@@ -25,4 +25,8 @@
 
 <dialog #joinDialog>
     <app-join-chat-modal (dataChanged)="join($event)" (onCancel)="closeJoinModal()"></app-join-chat-modal>
+</dialog>
+
+<dialog #createDialog>
+    <app-create-chat-modal (dataChanged)="create($event)" (onCancel)="closeCreateModal()"></app-create-chat-modal>
 </dialog>

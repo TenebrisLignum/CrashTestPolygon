@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LargeSpinnerComponent } from '../../core/shared/large-spinner/large-spinner.component';
 import { JoinChatModalComponent } from './join-chat-modal/join-chat-modal.component';
+import { CreateChatModalComponent } from './create-chat-modal/create-chat-modal.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { JoinChatModalComponent } from './join-chat-modal/join-chat-modal.compon
         ChatsComponent,
         ChatRoomComponent,
         ChatRoomsListComponent,
-        JoinChatModalComponent
+        JoinChatModalComponent,
+        CreateChatModalComponent
     ],
     imports: [
         BrowserModule,

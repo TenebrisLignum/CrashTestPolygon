@@ -74,7 +74,7 @@ namespace Presentation.Controllers.Chats
             var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, user.Id);
 
             var result = await _sender.Send(command);
-            return Ok(result);
+            return Ok(new { chatRoomId = result });
         }
     }
 }

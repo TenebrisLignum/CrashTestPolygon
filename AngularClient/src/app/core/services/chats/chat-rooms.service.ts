@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { JoinChatRoomRequest } from '../../interfaces/dto/chats/JoinChatRoomRequest';
+import { CreateChatRoomRequest } from '../../interfaces/dto/chats/CreateChatRoomRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -27,5 +28,9 @@ export class ChatRoomsService {
 
     join(request: JoinChatRoomRequest): Observable<any> {
         return this._http.post(this.ApiUrl + '/join', request);
+    }
+
+    create(request: CreateChatRoomRequest): Observable<any> {
+        return this._http.post(this.ApiUrl, request);
     }
 }
