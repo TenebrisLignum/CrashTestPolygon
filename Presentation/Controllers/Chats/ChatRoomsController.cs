@@ -33,7 +33,7 @@ namespace Presentation.Controllers.Chats
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string id)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
             var query = new GetChatRoomDetailsQuery(id, user.Id);
@@ -44,7 +44,7 @@ namespace Presentation.Controllers.Chats
         [HttpGet("my-chats")]
         public async Task<IActionResult> List()
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
             var query = new GetChatRoomsByUserIdQuery(user.Id);
@@ -56,7 +56,7 @@ namespace Presentation.Controllers.Chats
         [HttpPost("join")]
         public async Task<IActionResult> Join(JoinChatRoomRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
             var command = new JoinChatRoomCommand(request.ChatRoomName, user.Id, request.Password);
@@ -68,7 +68,7 @@ namespace Presentation.Controllers.Chats
         [HttpPost]
         public async Task<IActionResult> Create(CreateChatRoomRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
             var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, user.Id);
