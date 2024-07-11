@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatMessagesService } from '../../../core/services/chats/chat-messages.service';
 import { LoadChatMessagesRequest } from '../../../core/interfaces/dto/chats/LoadChatMessagesRequest';
@@ -15,6 +15,8 @@ import { SendChatMessageRequest } from '../../../core/interfaces/dto/chats/SendC
     styleUrl: './chat-room.component.scss'
 })
 export class ChatRoomComponent {
+    @ViewChild('messagesContainer') private messagesContainer: ElementRef;
+
     sendIcon = faPaperPlane;
 
     chatId: string;
@@ -37,6 +39,10 @@ export class ChatRoomComponent {
     ngOnInit() {
         this.chatId = this._route.snapshot.paramMap.get('id') as string;
         this._loadChatDetails(this.chatId);
+    }
+
+    ngAfterViewChecked() {
+        this._scrollToBottom();
     }
 
     send() {
@@ -76,5 +82,11 @@ export class ChatRoomComponent {
 
             }
         });
+    }
+
+    private _scrollToBottom() {
+        try {
+            this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+        } catch (err) { }
     }
 }

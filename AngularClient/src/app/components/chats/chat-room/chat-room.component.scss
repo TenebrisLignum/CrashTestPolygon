@@ -28,9 +28,27 @@
     background-color: $color-bg2;
     padding: 20px;
     border-radius: 10px;
-    max-height: 500px;
+    height: calc(100vh - 130px);
     overflow-y: auto;
     margin-bottom: 20px;
+
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $color-bg1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $color-brand2;
+        border-radius: 6px;
+        border: 3px solid $color-bg1;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $color-brand1;
+    }
 }
 
 .chat__message {
@@ -84,6 +102,13 @@
     }
 }
 
-.char_spinner {
+.chat_spinner {
     padding: 30vh;
+}
+
+.no-messages {
+    @extend .font__h2-u;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
 }

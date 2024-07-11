@@ -4,6 +4,7 @@ import { ChatRoomItemViewModel } from '../../../core/interfaces/view-models/chat
 import { Router } from '@angular/router';
 import { JoinChatRoomRequest } from '../../../core/interfaces/dto/chats/JoinChatRoomRequest';
 import { CreateChatRoomRequest } from '../../../core/interfaces/dto/chats/CreateChatRoomRequest';
+import { AlertService } from '../../../core/services/alert.service';
 
 @Component({
     selector: 'app-chat-rooms-list',
@@ -20,7 +21,8 @@ export class ChatRoomsListComponent {
 
     constructor(
         private _chatRoomsService: ChatRoomsService,
-        private _router: Router
+        private _router: Router,
+        private _alertService: AlertService
     ) { }
 
     ngOnInit() {
@@ -39,6 +41,7 @@ export class ChatRoomsListComponent {
         this._chatRoomsService.join($event as JoinChatRoomRequest).subscribe({
             next: (res) => {
                 this._redirectToChatRoom(res.chatRoomId);
+                this._alertService.showSucsess("Welcome!");
             },
             error: (err) => {
 
@@ -58,6 +61,7 @@ export class ChatRoomsListComponent {
         this._chatRoomsService.create($event as CreateChatRoomRequest).subscribe({
             next: (res) => {
                 this._redirectToChatRoom(res.chatRoomId);
+                this._alertService.showSucsess("Chat room was successfully created!");
             },
             error: (err) => {
 
