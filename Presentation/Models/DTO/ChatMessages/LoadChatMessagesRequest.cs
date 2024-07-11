@@ -1,4 +1,4 @@
-﻿namespace Presentation.Models.DTO.Chats
+﻿namespace Presentation.Models.DTO.ChatMessages
 {
     public sealed record LoadChatMessagesRequest
     (

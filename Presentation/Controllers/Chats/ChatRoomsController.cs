@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Models.DTO.Chats;
+using Presentation.Models.DTO.ChatRooms;
 using System.Security.Claims;
 
 namespace Presentation.Controllers.Chats

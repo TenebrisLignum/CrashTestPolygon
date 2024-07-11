@@ -1,4 +1,4 @@
-﻿namespace Presentation.Models.DTO.Chats
+﻿namespace Presentation.Models.DTO.ChatRooms
 {
     public sealed record JoinChatRoomRequest
     (
