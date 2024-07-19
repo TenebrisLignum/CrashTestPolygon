@@ -9,6 +9,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ChatRoomHub {
     private hubConnection: signalR.HubConnection;
+    private connectionPromise: Promise<void>;
 
     private messageSubject = new Subject<ChatMessageViewModel>();
     public message$: Observable<ChatMessageViewModel> = this.messageSubject.asObservable();
@@ -21,12 +22,29 @@ export class ChatRoomHub {
         this.hubConnection.on('ReceiveMessage', (message: ChatMessageViewModel) => {
             this.messageSubject.next(message);
         });
+
+        this.connectionPromise = this.startConnection();
     }
 
-    startConnection(): void {
-        this.hubConnection
+    startConnection(): Promise<void> {
+        return this.hubConnection
             .start()
             .then(() => console.log('Connection started'))
-            .catch(err => console.log('Error while starting connection: ' + err));
+            .catch(err => {
+                console.log('Error while starting connection: ' + err);
+                return Promise.reject(err);
+            });
+    }
+
+    joinChatRoom(chatRoomId: string): void {
+        this.connectionPromise
+            .then(() => this.hubConnection.invoke('JoinChatRoom', chatRoomId))
+            .catch(err => console.error('Error while joining chat room: ' + err));
+    }
+
+    leaveChatRoom(chatRoomId: string): void {
+        this.connectionPromise
+            .then(() => this.hubConnection.invoke('LeaveChatRoom', chatRoomId))
+            .catch(err => console.error('Error while leaving chat room: ' + err));
     }
 }

@@ -43,15 +43,17 @@ export class ChatRoomComponent {
 
     ngOnInit() {
         this.chatId = this._route.snapshot.paramMap.get('id') as string;
-        this._loadChatDetails(this.chatId);
-
         this._chatRoomHub.startConnection();
+        debugger
+        this._chatRoomHub.joinChatRoom(this.chatId);
         this.messageSubscription = this._chatRoomHub.message$.subscribe(
             (message: ChatMessageViewModel) => {
-                debugger
                 this.chatMessagesViewModel.messages.push(message);
             }
         );
+
+        this._loadChatDetails(this.chatId);
+
     }
 
     ngAfterViewChecked() {
@@ -61,7 +63,8 @@ export class ChatRoomComponent {
     ngOnDestroy(): void {
         if (this.messageSubscription) {
             this.messageSubscription.unsubscribe();
-        }
+        };
+        this._chatRoomHub.leaveChatRoom(this.chatId);
     }
 
     send() {

@@ -59,7 +59,7 @@ namespace Presentation.Controllers.Chats
             var query = new GetChatMessageQuery(result);
             var newMessage = await _sender.Send(query);
              
-            await _chatHub.Clients.All.ReceiveMessage(newMessage);
+            await _chatHub.Clients.Group(request.ChatRoomId).ReceiveMessage(newMessage);
         }
     }
 }
