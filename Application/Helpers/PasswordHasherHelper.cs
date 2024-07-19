@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Application.Common
+namespace Application.Helpers
 {
     public static class PasswordHasherHelper
     {
