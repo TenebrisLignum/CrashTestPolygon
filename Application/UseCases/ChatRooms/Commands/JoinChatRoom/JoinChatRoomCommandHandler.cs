@@ -26,13 +26,10 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
             var chatRoom = await _chatRoomRepository.GetByName(request.ChatRoomName) 
                 ?? throw new BadRequestException($"Chat with the name {request.ChatRoomName} does not exist.");
 
-            var newChatUser = new ApplicationUserChatRoom()
-            {
-                ApplicationUserId = request.UserId,
-                ChatRoomId = chatRoom.Id
-            };
+            if (await _chatUserRepository.IsExistByFields(request.UserId, chatRoom.Id))
+                return chatRoom.Id;
 
-            if (!await _chatUserRepository.IsExist(newChatUser) && chatRoom.IsPrivate)
+            if (chatRoom.IsPrivate)
             {
                 if (string.IsNullOrWhiteSpace(request.Password))
                     throw new BadRequestException("Please, enter password!");
@@ -41,9 +38,14 @@ namespace Application.UseCases.ChatRooms.Commands.JoinChatRoom
 
                 if (chatRoom.Password != password)
                     throw new BadRequestException("Invalid password!");
-
-                await _chatUserRepository.Insert(newChatUser);
             }
+
+            var newChatUser = new ApplicationUserChatRoom()
+            {
+                ApplicationUserId = request.UserId,
+                ChatRoomId = chatRoom.Id
+            };
+            await _chatUserRepository.Insert(newChatUser);
 
             return chatRoom.Id;
         }
