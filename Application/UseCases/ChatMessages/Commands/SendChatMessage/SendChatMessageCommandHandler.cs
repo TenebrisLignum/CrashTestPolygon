@@ -1,5 +1,6 @@
 ﻿using Application.Mapping.Chats;
 using Application.Messaging;
+using Application.UseCases.ChatMessages.Queries.LoadChatMessages;
 using Domain.Exceptions;
 using Domain.Repositories.Chats;
 using FluentValidation;
