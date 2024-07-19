@@ -2,12 +2,14 @@ using Data;
 using Domain;
 using Application;
 using Presentation;
+using Hubs;
 using WebAPI.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities.Users;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Hubs.Chats;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,7 +56,10 @@ builder.Services
 builder.Services
     .AddData()
     .AddApplication()
-    .AddPresentation();
+    .AddPresentation()
+    .AddHubs();
+
+builder.Services.AddSignalR();
 
 builder.Services
     .AddCors(o => o.AddPolicy(Consts.CORSName, builder =>
@@ -83,6 +88,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHub<ChatRoomHub>("/chat-room-hub");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

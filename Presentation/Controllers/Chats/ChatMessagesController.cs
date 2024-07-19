@@ -1,11 +1,14 @@
 ﻿using Application.UseCases.ChatMessages.Commands.SendChatMessage;
+using Application.UseCases.ChatMessages.Queries.GetMessageQuery;
 using Application.UseCases.ChatMessages.Queries.LoadChatMessages;
 using Domain.Entities.Users;
 using Domain.Exceptions;
+using Hubs.Chats;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Presentation.Models.DTO.ChatMessages;
 using System.Security.Claims;
 
@@ -18,15 +21,18 @@ namespace Presentation.Controllers.Chats
     {
         private readonly ISender _sender;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHubContext<ChatRoomHub, IChatRoomHub> _chatHub;
 
         public ChatMessagesController
         (
             ISender sender,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IHubContext<ChatRoomHub, IChatRoomHub> chatHub
         )
         {
             _sender = sender;
             _userManager = userManager;
+            _chatHub = chatHub;
         }
 
         [HttpGet("load")]
@@ -42,7 +48,7 @@ namespace Presentation.Controllers.Chats
         }
 
         [HttpPost("send")]
-        public async Task<IActionResult> Send(SendChatMessageRequest request)
+        public async Task Send(SendChatMessageRequest request)
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
@@ -50,7 +56,10 @@ namespace Presentation.Controllers.Chats
             var command = new SendChatMessageCommand(request.Text, request.ChatRoomId, user.Id);
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            var query = new GetChatMessageQuery(result);
+            var newMessage = await _sender.Send(query);
+             
+            await _chatHub.Clients.All.ReceiveMessage(newMessage);
         }
     }
 }
