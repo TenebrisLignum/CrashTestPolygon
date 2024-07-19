@@ -2,12 +2,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatMessagesService } from '../../../core/services/chats/chat-messages.service';
 import { LoadChatMessagesRequest } from '../../../core/interfaces/dto/chats/LoadChatMessagesRequest';
-import { ChatMessagesViewModel } from '../../../core/interfaces/view-models/chats/ChatMessagesViewModel';
+import { ChatMessagesViewModel, ChatMessageViewModel } from '../../../core/interfaces/view-models/chats/ChatMessagesViewModel';
 import { ChatRoomsService } from '../../../core/services/chats/chat-rooms.service';
 import { ChatRoomDetailViewModel } from '../../../core/interfaces/view-models/chats/ChatRoomDetailViewModel';
 import { AlertService } from '../../../core/services/alert.service';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { SendChatMessageRequest } from '../../../core/interfaces/dto/chats/SendChatMessageRequest';
+import { ChatRoomHub } from '../../../core/hubs/chat-room-hub';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-chat-room',
@@ -16,6 +18,8 @@ import { SendChatMessageRequest } from '../../../core/interfaces/dto/chats/SendC
 })
 export class ChatRoomComponent {
     @ViewChild('messagesContainer') private messagesContainer: ElementRef;
+
+    private messageSubscription: Subscription;
 
     sendIcon = faPaperPlane;
 
@@ -31,6 +35,7 @@ export class ChatRoomComponent {
     constructor(
         private _chatMessagesServie: ChatMessagesService,
         private _chatRoomsService: ChatRoomsService,
+        private _chatRoomHub: ChatRoomHub,
         private _route: ActivatedRoute,
         private _router: Router,
         private _alertService: AlertService
@@ -39,10 +44,24 @@ export class ChatRoomComponent {
     ngOnInit() {
         this.chatId = this._route.snapshot.paramMap.get('id') as string;
         this._loadChatDetails(this.chatId);
+
+        this._chatRoomHub.startConnection();
+        this.messageSubscription = this._chatRoomHub.message$.subscribe(
+            (message: ChatMessageViewModel) => {
+                debugger
+                this.chatMessagesViewModel.messages.push(message);
+            }
+        );
     }
 
     ngAfterViewChecked() {
         this._scrollToBottom();
+    }
+
+    ngOnDestroy(): void {
+        if (this.messageSubscription) {
+            this.messageSubscription.unsubscribe();
+        }
     }
 
     send() {

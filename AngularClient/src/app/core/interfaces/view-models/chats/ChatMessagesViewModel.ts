@@ -4,7 +4,7 @@ export interface ChatMessagesViewModel {
     hasNextPage: boolean
 }
 
-interface ChatMessageViewModel {
+export interface ChatMessageViewModel {
     id: string,
     text: string,
     ownerId: string,
