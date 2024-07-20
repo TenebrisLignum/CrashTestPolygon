@@ -48,17 +48,6 @@
 
 // Modal
 
-dialog {
-    background-color: $color-bg1;
-    border-radius: 10px;
-    border-color: $color-brand2;
-}
-
-::backdrop {
-    background-color: black;
-    opacity: 0.5;
-}
-
 .modal-content {
     display: flex;
     flex-direction: column;

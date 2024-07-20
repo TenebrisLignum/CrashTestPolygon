@@ -1,4 +1,4 @@
-﻿using Application.Logic.Articles.Queries.GetArticleById;
+﻿using Application.UseCases.Articles.Queries.GetArticleById;
 using Domain.Entities.Articles;
 using Domain.Repositories.Articles;
 using Moq;

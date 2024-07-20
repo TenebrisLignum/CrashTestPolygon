@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,33 +8,45 @@ import { LandingModule } from './components/landing/landing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BlogsModule } from './components/blogs/blogs.module';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { interceptorProviders } from './core/interceptors/interceptorProviders';
 import { FeaturesComponent } from './components/features/features.component';
-
+import { JwtModule } from '@auth0/angular-jwt';
+import LocalStorageHelper from './core/helpers/localstorage.helper';
+import { SignupComponent } from './components/sign-up/sign-up.component';
+import { ChatsComponent } from './components/chats/chats.component';
+import { ChatsModule } from './components/chats/chats.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         LoginComponent,
-        FeaturesComponent
+        FeaturesComponent,
+        SignupComponent
     ],
     imports: [
         LandingModule,
         BrowserModule,
         BlogsModule,
+        ChatsModule,
+
         HttpClientModule,
         AppRoutingModule,
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: LocalStorageHelper.getAccessToken,
+                allowedDomains: ["localhost:44320"]
+            }
+        })
     ],
     providers: interceptorProviders,
     bootstrap: [AppComponent]

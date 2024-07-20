@@ -1,0 +1,33 @@
+<div class="chat row" *ngIf="isChatRoomLoaded">
+
+    <div class="chat__header">
+        <h1 class="chat__title">{{chatRoomDetails.name}}</h1>
+        <h2 class="chat__participants font__h2-u">Participants: {{chatRoomDetails.usersCount}}</h2>
+    </div>
+
+    <div class="chat__messages" *ngIf="isFirstMessagesLoaded" #messagesContainer>
+        <div *ngIf="chatMessagesViewModel.messages && chatMessagesViewModel.messages.length > 0; else noData">
+            <div class="chat__message" *ngFor="let m of chatMessagesViewModel?.messages">
+                <p class="chat__username">{{m.ownerName}}</p>
+                <p class="chat__text">{{m.text}}</p>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <div class="no-messages">
+            There's no messages yet!
+        </div>
+    </ng-template>
+
+    <div class="chat__input">
+        <input [(ngModel)]="messageToSend" type="text" class="chat__input-field" placeholder="Type a message..." />
+        <button (click)="send()" [disabled]="messageToSend == ' '" class="send-button"><fa-icon
+                [icon]="sendIcon"></fa-icon></button>
+    </div>
+
+</div>
+
+<app-large-spinner class="chat_spinner row" *ngIf="!isChatRoomLoaded">
+
+</app-large-spinner>

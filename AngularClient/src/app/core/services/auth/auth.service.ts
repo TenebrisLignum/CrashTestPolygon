@@ -3,7 +3,9 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { AuthDto } from '../../interfaces/dto/auth/AuthDto';
-import LocalStorageHelper from '../../helpers/localstorage.helper';
+import { SignUpDto } from '../../interfaces/dto/auth/SignUpDto';
+import JWTHelper from '../../helpers/jwt.helper';
+import { ACCESS_TONKEN_KEY, ADMINISTRATOR_ROLE_STRING } from '../../../../consts';
 
 @Injectable({
     providedIn: 'root'
@@ -19,34 +21,28 @@ export class AuthService {
     ) { }
 
     login(authDto: AuthDto): Observable<any> {
-        // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
-
-        LocalStorageHelper.set('role', 'Administrator')
         return this._http.post(this.ApiUrl + '/login', authDto);
     }
 
-    refresh(refreshToken: string): Observable<any> {
-        let body = { refreshToken: refreshToken }
-        return this._http.post(this.ApiUrl + '/refresh', body);
+    signup(sigUpDto: SignUpDto): Observable<any> {
+        return this._http.post(this.ApiUrl + '/signup', sigUpDto);
+
+    }
+
+    logout = () => {
+        localStorage.removeItem(ACCESS_TONKEN_KEY);
+        this.sendAuthStateChangeNotification(false);
     }
 
     sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
         this.authChangeSub.next(isAuthenticated);
     }
 
-    logout = () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('role');
-        this.sendAuthStateChangeNotification(false);
-    }
-
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('access_token');
+        return !!localStorage.getItem(ACCESS_TONKEN_KEY);
     }
 
-    // TODO: CHANGE IT WHEN WE'LL ADD THE USERS REGISTRATION
     isAdmin() {
-        return localStorage.getItem('role') == 'Administrator';
+        return JWTHelper.isUserInRole(ADMINISTRATOR_ROLE_STRING);
     }
 }

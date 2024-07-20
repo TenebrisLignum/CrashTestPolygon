@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Articles
 {
-    public class Article : Entity
+    public class Article : EntityIntId
     {
         public string Title { get; set; }
 
