@@ -39,6 +39,7 @@ namespace Application.UseCases.ChatMessages.Queries.LoadChatMessages
                 .Where(cm => cm.ChatRoomId == request.ChatRoomId)
                 .Include(cm => cm.Sender);
 
+            // TODO: FIX LATER
             var messages = await PagedList<ChatMessage>.CreateAsync(query, request.Page, 20);
             var messagesVMs = ChatMessageMapper.MapChatMessagesToChatMessageViewModels(messages.Items);
 
