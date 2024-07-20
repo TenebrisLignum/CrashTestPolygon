@@ -1,0 +1,113 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
+.chat {
+    background-color: $color-bg1;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.chat__header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chat__title {
+    @extend .font__h1-u;
+    color: $color-brand1;
+}
+
+.chat__participants {
+    @extend .font__h2-u;
+    color: $color-brand2;
+}
+
+.chat__messages {
+    background-color: $color-bg2;
+    padding: 20px;
+    border-radius: 10px;
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+    margin-bottom: 20px;
+
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $color-bg1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $color-brand2;
+        border-radius: 6px;
+        border: 3px solid $color-bg1;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $color-brand1;
+    }
+}
+
+.chat__message {
+    background-color: $color-bg1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.chat__username {
+    @extend .font__label-u-m;
+    color: $color-brand2;
+}
+
+.chat__text {
+    @extend .font__para-u;
+    color: $color-white;
+}
+
+.chat__input {
+    background-color: $color-bg2;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chat__input-field {
+    @extend .font__article-u;
+    width: calc(100% - 80px);
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: $color-white;
+    background-color: $color-bg1;
+}
+
+.send-button {
+    width: 50px;
+    height: 52px;
+    background-color: $color-bg1;
+    border: none;
+    border-radius: 5px;
+}
+
+.send-button:hover {
+    background-color: $color-brand2;
+
+    fa-icon {
+        color: $color-bg1;
+    }
+}
+
+.chat_spinner {
+    padding: 30vh;
+}
+
+.no-messages {
+    @extend .font__h2-u;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}

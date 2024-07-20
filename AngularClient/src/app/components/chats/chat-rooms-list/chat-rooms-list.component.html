@@ -1,0 +1,32 @@
+<div class="row">
+    <h1 class="title"> Chat Rooms </h1>
+</div>
+
+<div *ngIf="isLoaded" class="chats-actions">
+    <div class="chats-actions__block">
+        <button class="custom-button" (click)="onCreate()">
+            Create chat
+        </button>
+
+        <button class="custom-button" (click)="onJoin()">
+            Join chat
+        </button>
+    </div>
+</div>
+
+<div *ngIf="isLoaded" class="chats-list">
+    <div *ngFor="let chat of chats" class="chats-list__item" (click)="enter(chat.id)">
+        <p>{{chat.name}}</p>
+        <span>Users: {{chat.usersCount}}</span>
+    </div>
+</div>
+
+<app-large-spinner class="spinner" *ngIf="!isLoaded"></app-large-spinner>
+
+<dialog #joinDialog>
+    <app-join-chat-modal (dataChanged)="join($event)" (onCancel)="closeJoinModal()"></app-join-chat-modal>
+</dialog>
+
+<dialog #createDialog>
+    <app-create-chat-modal (dataChanged)="create($event)" (onCancel)="closeCreateModal()"></app-create-chat-modal>
+</dialog>

@@ -75,7 +75,6 @@ export class ArticlesListComponent {
                 this._alertService.showSucsess("Article was deleted!");
             },
             error: (e) => {
-                debugger
                 this._alertService.showError(e.error.title);
             }
         })

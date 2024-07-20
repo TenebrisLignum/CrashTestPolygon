@@ -1,6 +1,4 @@
-﻿using Data.Configurations;
-using Domain;
-using Domain.Entities.Abstract;
+﻿using Domain;
 using Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,7 +7,7 @@ using System.Reflection;
 
 namespace Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -24,14 +22,14 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
 
-            var configurations = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => !t.IsAbstract && typeof(IEntityConfiguration).IsAssignableFrom(t))
-                .Select(Activator.CreateInstance)
-                .Cast<IEntityConfiguration>();
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => !type.IsAbstract && type.GetInterfaces().Any(interfaceType =>
+                    interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
 
-            foreach (var configuration in configurations)
+            foreach (var type in typesToRegister)
             {
-                configuration.Configure(modelBuilder);
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.ApplyConfiguration(configurationInstance);
             }
 
             modelBuilder.Entity<IdentityRole>().HasData([
@@ -46,22 +44,8 @@ namespace Data
                     Id = "a0d4ed01-4665-463e-9507-99bcc45b7672",
                     Name = Consts.UserRoleString,
                     NormalizedName = Consts.UserRoleStringNormalized
-                } 
+                }
             ]);
-
-            AddEntities(modelBuilder);
-        }
-
-        private void AddEntities(ModelBuilder modelBuilder)
-        {
-            var entityTypes = Assembly.GetAssembly(typeof(Entity))
-                .GetTypes()
-                .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Entity)));
-
-            foreach (var type in entityTypes)
-            {
-                modelBuilder.Entity(type);
-            }
         }
     }
 }

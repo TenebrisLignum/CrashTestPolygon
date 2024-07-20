@@ -1,7 +1,4 @@
-import { AuthResponseDto } from "../interfaces/dto/auth/AuthResponseDto";
-
-const ACCESS_TONKEN_KEY = 'access_token';
-const REFRESH_TONKEN_KEY = 'refresh_token';
+const ACCESS_TONKEN_KEY = 'token';
 
 export default class LocalStorageHelper {
     static set(key: string, value: string) {
@@ -16,9 +13,7 @@ export default class LocalStorageHelper {
         return this.get(ACCESS_TONKEN_KEY);
     }
 
-    // TODO: Move refresh token from the local storage
-    static updateTokens(tokens: AuthResponseDto) {
-        this.set(ACCESS_TONKEN_KEY, tokens.accessToken);
-        this.set(REFRESH_TONKEN_KEY, tokens.refreshToken);
+    static setAccessToken(token: string) {
+        this.set(ACCESS_TONKEN_KEY, token);
     }
 }

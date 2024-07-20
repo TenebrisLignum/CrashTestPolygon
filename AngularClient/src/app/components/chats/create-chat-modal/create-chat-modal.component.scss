@@ -1,0 +1,37 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/fonts.scss";
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-title {
+    @extend .font__h2-u;
+    color: $color-brand2;
+    padding-bottom: 30px;
+}
+
+.modal-body {
+    padding-bottom: 30px;
+}
+
+.form {
+    min-width: 300px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+
+    .btn {
+        margin: 5px;
+    }
+}

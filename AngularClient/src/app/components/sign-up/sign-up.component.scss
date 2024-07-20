@@ -1,0 +1,25 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/fonts.scss";
+
+.signup-section {
+    background-color: #292F36;
+    min-height: 100vh;
+}
+
+.signup__title {
+    @extend .font__h1-u;
+    color: $color-brand2;
+    text-align: center;
+    padding: 64px;
+}
+
+.signup {
+    display: flex;
+    justify-content: center;
+}
+
+.signup__form {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+}
