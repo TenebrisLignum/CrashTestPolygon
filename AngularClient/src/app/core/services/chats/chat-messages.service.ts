@@ -19,7 +19,8 @@ export class ChatMessagesService {
         let params = new HttpParams();
 
         params = params.set('chatRoomId', request.chatRoomId);
-        params = params.set('page', request.page ?? 1);
+        if (request.lastMessageId != null)
+            params = params.set('lastMessageId', request.lastMessageId);
 
         return this._http.get(this.ApiUrl + '/load', { params: params });
     }
