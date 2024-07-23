@@ -1,4 +1,4 @@
 export interface LoadChatMessagesRequest {
     chatRoomId: string,
-    page: number
+    lastMessageId: string | null
 }

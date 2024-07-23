@@ -6,7 +6,7 @@ namespace Application.UseCases.ChatMessages.Queries.LoadChatMessages
     (
         string ChatRoomId,
         string UserId,
-        int Page = 1
+        string LastMessageId
     )
     : IQuery<ChatMessagesViewModel>;
 }

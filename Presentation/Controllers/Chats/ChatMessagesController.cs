@@ -41,7 +41,7 @@ namespace Presentation.Controllers.Chats
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 ?? throw new BadRequestException("User not found!");
 
-            var query = new LoadChatMessagesQuery(request.ChatRoomId, user.Id, request.Page);
+            var query = new LoadChatMessagesQuery(request.ChatRoomId, user.Id, request.LastMessageId);
             var result = await _sender.Send(query);
 
             return Ok(result);

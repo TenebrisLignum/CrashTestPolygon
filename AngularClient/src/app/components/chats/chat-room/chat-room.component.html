@@ -5,11 +5,16 @@
         <h2 class="chat__participants font__h2-u">Participants: {{chatRoomDetails.usersCount}}</h2>
     </div>
 
-    <div class="chat__messages" *ngIf="isFirstMessagesLoaded" #messagesContainer>
-        <div *ngIf="chatMessagesViewModel.messages && chatMessagesViewModel.messages.length > 0; else noData">
-            <div class="chat__message" *ngFor="let m of chatMessagesViewModel?.messages">
-                <p class="chat__username">{{m.ownerName}}</p>
-                <p class="chat__text">{{m.text}}</p>
+    <div class="chat__messages" *ngIf="isFirstMessagesLoaded" #messagesContainer (scroll)="onScroll($event)">
+        <div *ngIf="chatMessagesVM.messages && chatMessagesVM.messages.length > 0; else noData">
+            <div class="chat__message" *ngFor="let m of chatMessagesVM?.messages">
+                <div>
+                    <p class="chat__username">{{m.ownerName}}</p>
+                    <p class="chat__text">{{m.text}}</p>
+                </div>
+                <div>
+                    <p>{{m.createdDate| date: 'MMMM d HH:mm'}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -21,8 +26,9 @@
     </ng-template>
 
     <div class="chat__input">
-        <input [(ngModel)]="messageToSend" type="text" class="chat__input-field" placeholder="Type a message..." />
-        <button (click)="send()" [disabled]="messageToSend == ' '" class="send-button"><fa-icon
+        <input [(ngModel)]="messageToSend" (keyup.enter)="send()" type="text" class="chat__input-field"
+            placeholder="Type a message..." />
+        <button (click)="send()" [disabled]="messageToSend == ' ' || isMessageRequestSent" class="send-button"><fa-icon
                 [icon]="sendIcon"></fa-icon></button>
     </div>
 
