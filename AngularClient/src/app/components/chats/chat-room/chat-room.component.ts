@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatMessagesService } from '../../../core/services/chats/chat-messages.service';
 import { LoadChatMessagesRequest } from '../../../core/interfaces/dto/chats/LoadChatMessagesRequest';
@@ -24,13 +24,18 @@ export class ChatRoomComponent {
     sendIcon = faPaperPlane;
 
     chatId: string;
-    chatMessagesViewModel: ChatMessagesViewModel;
+    chatMessagesVM: ChatMessagesViewModel = { messages: {}, lastMessageId: "" } as ChatMessagesViewModel;
     chatRoomDetails: ChatRoomDetailViewModel;
 
     messageToSend: string;
 
     isChatRoomLoaded: boolean = false;
     isFirstMessagesLoaded: boolean = false;
+    isMessagesOver: boolean = false;
+    isScrolledToBottom: boolean = false;
+
+    isRequestSent: boolean = false;
+    isMessageRequestSent: boolean = false;
 
     constructor(
         private _chatMessagesServie: ChatMessagesService,
@@ -44,16 +49,14 @@ export class ChatRoomComponent {
     ngOnInit() {
         this.chatId = this._route.snapshot.paramMap.get('id') as string;
         this._chatRoomHub.startConnection();
-        debugger
         this._chatRoomHub.joinChatRoom(this.chatId);
         this.messageSubscription = this._chatRoomHub.message$.subscribe(
             (message: ChatMessageViewModel) => {
-                this.chatMessagesViewModel.messages.push(message);
+                this.chatMessagesVM.messages.push(message);
             }
         );
 
         this._loadChatDetails(this.chatId);
-
     }
 
     ngAfterViewChecked() {
@@ -68,15 +71,27 @@ export class ChatRoomComponent {
     }
 
     send() {
+        this.isMessageRequestSent = true;
+
         let request = { text: this.messageToSend, chatRoomId: this.chatId } as SendChatMessageRequest;
         this._chatMessagesServie.send(request).subscribe({
             next: (res) => {
                 this.messageToSend = '';
-            },
-            error: (err) => {
-
+                this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+                this.isMessageRequestSent = false;
             }
         })
+    }
+
+    loadNextMessages() {
+        this._loadMessages(this.chatId, this.chatMessagesVM.lastMessageId);
+    }
+
+    @HostListener('scroll', ['$event'])
+    onScroll($event: any): void {
+        if (this.messagesContainer.nativeElement.scrollTop < 300) {
+            this._loadMessages(this.chatId, this.chatMessagesVM.lastMessageId);
+        }
     }
 
     private _loadChatDetails(id: string) {
@@ -93,22 +108,41 @@ export class ChatRoomComponent {
         });
     }
 
-    private _loadMessages(chatRoomId: string, page: number = 1) {
-        let params = { chatRoomId: chatRoomId, page: page } as LoadChatMessagesRequest;
+    private _loadMessages(chatRoomId: string, lastMessageId: string | null = null) {
+        if (this.isMessagesOver || this.isRequestSent)
+            return;
+
+        this.isRequestSent = true;
+
+        let params = { chatRoomId: chatRoomId, lastMessageId: lastMessageId } as LoadChatMessagesRequest;
         this._chatMessagesServie.load(params).subscribe({
             next: (res: ChatMessagesViewModel) => {
-                this.chatMessagesViewModel = res;
-                this.isFirstMessagesLoaded = true;
+                if (res.messages.length == 0) {
+                    this.isMessagesOver = true;
+                    return;
+                };
+
+                if (!this.isFirstMessagesLoaded) {
+                    this.chatMessagesVM = res;
+                    this.isFirstMessagesLoaded = true;
+                }
+                else {
+                    this.chatMessagesVM.messages = res.messages.concat(this.chatMessagesVM.messages);
+                    this.chatMessagesVM.lastMessageId = res.lastMessageId;
+                }
+
+                this.isRequestSent = false;
             },
             error: (err) => {
-
+                this.isRequestSent = false;
             }
         });
     }
 
     private _scrollToBottom() {
-        try {
+        if (!this.isScrolledToBottom) {
             this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
-        } catch (err) { }
+            this.isScrolledToBottom = true;
+        }
     }
 }

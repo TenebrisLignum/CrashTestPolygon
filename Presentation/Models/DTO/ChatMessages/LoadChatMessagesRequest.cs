@@ -3,6 +3,6 @@
     public sealed record LoadChatMessagesRequest
     (
         string ChatRoomId,
-        int Page = 1
+        string? LastMessageId
     );
 }

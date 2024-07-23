@@ -51,6 +51,8 @@
 }
 
 .chat__message {
+    display: flex;
+    justify-content: space-between;
     background-color: $color-bg1;
     padding: 10px;
     border-radius: 5px;

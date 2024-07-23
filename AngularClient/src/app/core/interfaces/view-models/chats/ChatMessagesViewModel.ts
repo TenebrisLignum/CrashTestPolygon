@@ -1,7 +1,6 @@
 export interface ChatMessagesViewModel {
     messages: ChatMessageViewModel[],
-    page: number,
-    hasNextPage: boolean
+    lastMessageId: string
 }
 
 export interface ChatMessageViewModel {

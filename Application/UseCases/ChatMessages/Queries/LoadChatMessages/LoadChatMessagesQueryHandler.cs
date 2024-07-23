@@ -34,23 +34,48 @@ namespace Application.UseCases.ChatMessages.Queries.LoadChatMessages
             if (!await _chatUserRepository.IsExistByFields(request.UserId, request.ChatRoomId))
                 throw new BadRequestException("You are not in this chat!");
 
-            var query = _chatMessagesRepository
-                .GetAsQueryable()
-                .Where(cm => cm.ChatRoomId == request.ChatRoomId)
-                .Include(cm => cm.Sender);
+            var messages = await QueryingMessages(request, cancellationToken);
 
-            // TODO: FIX LATER
-            var messages = await PagedList<ChatMessage>.CreateAsync(query, request.Page, 20);
-            var messagesVMs = ChatMessageMapper.MapChatMessagesToChatMessageViewModels(messages.Items);
+            var messagesVMs = ChatMessageMapper.MapChatMessagesToChatMessageViewModels(messages);
 
             var result = new ChatMessagesViewModel
             {
                 Messages = messagesVMs,
-                Page = messages.Page,
-                HasNextPage = messages.HasNextPage
+                LastMessageId = messagesVMs.FirstOrDefault()?.Id ?? null
             };
 
             return result;
+        }
+
+        private async Task<List<ChatMessage>> QueryingMessages(LoadChatMessagesQuery request, CancellationToken cancellationToken)
+        {
+            var query = _chatMessagesRepository
+                .GetAsQueryable()
+                .Where(cm => cm.ChatRoomId == request.ChatRoomId)
+                .Include(cm => cm.Sender)
+                .OrderByDescending(x => x.CreatedDate)
+                .AsQueryable();
+
+            if (request.LastMessageId != null)
+            {
+                var lastMessage = await _chatMessagesRepository
+                    .GetAsQueryable()
+                    .Where(x => x.Id == request.LastMessageId)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                if (lastMessage != null)
+                {
+                    query = query.Where(x => x.CreatedDate < lastMessage.CreatedDate);
+                }
+            }
+
+            if (await query.AnyAsync(cancellationToken))
+                return await query
+                    .Take(20)
+                    .OrderBy(x => x.CreatedDate)
+                    .ToListAsync(cancellationToken);
+            else
+                return [];
         }
     }
 }

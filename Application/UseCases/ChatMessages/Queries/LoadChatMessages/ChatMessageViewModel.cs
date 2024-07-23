@@ -4,8 +4,7 @@
     {
         public List<ChatMessageViewModel> Messages { get; set; }
 
-        public int Page {  get; set; }
-        public bool HasNextPage { get; set; }
+        public string LastMessageId { get; set; }
     }
 
     public class ChatMessageViewModel
