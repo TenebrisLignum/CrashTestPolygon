@@ -38,10 +38,10 @@ namespace Presentation.Controllers.Chats
         [HttpGet("load")]
         public async Task<IActionResult> Load([FromQuery] LoadChatMessagesRequest request)
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var query = new LoadChatMessagesQuery(request.ChatRoomId, user.Id, request.LastMessageId);
+            var query = new LoadChatMessagesQuery(request.ChatRoomId, userId, request.LastMessageId);
             var result = await _sender.Send(query);
 
             return Ok(result);
@@ -50,10 +50,10 @@ namespace Presentation.Controllers.Chats
         [HttpPost("send")]
         public async Task Send(SendChatMessageRequest request)
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var command = new SendChatMessageCommand(request.Text, request.ChatRoomId, user.Id);
+            var command = new SendChatMessageCommand(request.Text, request.ChatRoomId, userId);
             var result = await _sender.Send(command);
 
             var query = new GetChatMessageQuery(result);

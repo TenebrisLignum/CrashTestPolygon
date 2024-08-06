@@ -26,7 +26,7 @@ public sealed class GenerateJWTTokenCommandHandler : ICommandHandler<GenerateJWT
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, request.User.UserName),
+            new Claim(JwtRegisteredClaimNames.Sub, request.User.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

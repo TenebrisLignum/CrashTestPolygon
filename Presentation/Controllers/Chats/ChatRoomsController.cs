@@ -33,10 +33,10 @@ namespace Presentation.Controllers.Chats
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string id)
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var query = new GetChatRoomDetailsQuery(id, user.Id);
+            var query = new GetChatRoomDetailsQuery(id, userId);
             var result = await _sender.Send(query);
             return Ok(result);
         }
@@ -44,10 +44,10 @@ namespace Presentation.Controllers.Chats
         [HttpGet("my-chats")]
         public async Task<IActionResult> List()
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var query = new GetChatRoomsByUserIdQuery(user.Id);
+            var query = new GetChatRoomsByUserIdQuery(userId);
             var result = await _sender.Send(query);
 
             return Ok(result);
@@ -56,10 +56,10 @@ namespace Presentation.Controllers.Chats
         [HttpPost("join")]
         public async Task<IActionResult> Join(JoinChatRoomRequest request)
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var command = new JoinChatRoomCommand(request.ChatRoomName, user.Id, request.Password);
+            var command = new JoinChatRoomCommand(request.ChatRoomName, userId, request.Password);
 
             var result = await _sender.Send(command);
             return Ok(new { chatRoomId = result });
@@ -68,10 +68,10 @@ namespace Presentation.Controllers.Chats
         [HttpPost]
         public async Task<IActionResult> Create(CreateChatRoomRequest request)
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? throw new BadRequestException("User not found!");
 
-            var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, user.Id);
+            var command = new CreateChatRoomCommand(request.Name, request.IsPrivate, request.Password, userId);
 
             var result = await _sender.Send(command);
             return Ok(new { chatRoomId = result });
